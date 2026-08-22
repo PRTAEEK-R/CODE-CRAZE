@@ -2,1108 +2,1175 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RAKSHAK — Unified Tactical & Public Safety Network</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAKSHAK — Unified Tactical & Public Safety Network</title>
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            dark: '#080b11',
-                            sidebar: '#0c111d',
-                            card: '#111726',
-                            border: '#1f293d',
-                            accent: '#38bdf8',
-                            critical: '#ef4444',
-                            high: '#f97316',
-                            medium: '#eab308',
-                            low: '#10b981',
-                        }
-                    }
-                }
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              dark: '#080b11',
+              sidebar: '#0c111d',
+              card: '#111726',
+              border: '#1f293d',
+              accent: '#38bdf8',
+              critical: '#ef4444',
+              high: '#f97316',
+              medium: '#eab308',
+              low: '#10b981',
             }
+          }
         }
-    </script>
+      }
+    }
+  </script>
 
-    <!-- Google Fonts & Font Awesome -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Google Fonts & Font Awesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-    <!-- Leaflet CSS & JS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- React & Babel -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- React & Babel -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #080b11;
-            color: #e2e8f0;
-            overflow-x: hidden;
-        }
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #080b11;
+      color: #e2e8f0;
+      overflow-x: hidden;
+    }
 
-        .font-mono {
-            font-family: 'JetBrains Mono', monospace;
-        }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
 
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
 
-        ::-webkit-scrollbar-track {
-            background: #080b11;
-        }
+    ::-webkit-scrollbar-track {
+      background: #080b11;
+    }
 
-        ::-webkit-scrollbar-thumb {
-            background: #1e293b;
-            border-radius: 4px;
-        }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 4px;
+    }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: #334155;
-        }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #334155;
+    }
 
-        .cyber-grid {
-            background-size: 36px 36px;
-            background-image:
-                linear-gradient(to right, rgba(31, 41, 61, 0.22) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(31, 41, 61, 0.22) 1px, transparent 1px);
-        }
+    .cyber-grid {
+      background-size: 36px 36px;
+      background-image:
+        linear-gradient(to right, rgba(31, 41, 61, 0.22) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(31, 41, 61, 0.22) 1px, transparent 1px);
+    }
 
-        .scanner-laser {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #38bdf8, #ef4444, transparent);
-            animation: laserSweep 4s ease-in-out infinite;
-            z-index: 9999;
-            pointer-events: none;
-        }
+    .scanner-laser {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #38bdf8, #ef4444, transparent);
+      animation: laserSweep 4s ease-in-out infinite;
+      z-index: 9999;
+      pointer-events: none;
+    }
 
-        @keyframes laserSweep {
-            0% {
-                top: 0%;
-                opacity: 0.8;
-            }
+    @keyframes laserSweep {
+      0% {
+        top: 0%;
+        opacity: 0.8;
+      }
 
-            50% {
-                top: 100%;
-                opacity: 1;
-            }
+      50% {
+        top: 100%;
+        opacity: 1;
+      }
 
-            100% {
-                top: 0%;
-                opacity: 0.8;
-            }
-        }
+      100% {
+        top: 0%;
+        opacity: 0.8;
+      }
+    }
 
-        /* POP-UP & MODAL ANIMATIONS */
-        .animate-backdrop-fade {
-            animation: backdropFade 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
+    /* POP-UP & MODAL ANIMATIONS */
+    .animate-backdrop-fade {
+      animation: backdropFade 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
 
-        @keyframes backdropFade {
-            0% {
-                opacity: 0;
-            }
+    @keyframes backdropFade {
+      0% {
+        opacity: 0;
+      }
 
-            100% {
-                opacity: 1;
-            }
-        }
+      100% {
+        opacity: 1;
+      }
+    }
 
-        .animate-modal-pop {
-            animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
+    .animate-modal-pop {
+      animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
 
-        @keyframes modalPop {
-            0% {
-                opacity: 0;
-                transform: scale(0.82) translateY(24px);
-            }
+    @keyframes modalPop {
+      0% {
+        opacity: 0;
+        transform: scale(0.82) translateY(24px);
+      }
 
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
 
-        .animate-toast-slide {
-            animation: toastSlide 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
+    .animate-toast-slide {
+      animation: toastSlide 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
 
-        @keyframes toastSlide {
-            0% {
-                opacity: 0;
-                transform: translateY(-20px) scale(0.92);
-            }
+    @keyframes toastSlide {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.92);
+      }
 
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
 
-        .animate-receipt-pop {
-            animation: receiptPop 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
+    .animate-receipt-pop {
+      animation: receiptPop 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
 
-        @keyframes receiptPop {
-            0% {
-                opacity: 0;
-                transform: translateY(35px) scale(0.94);
-            }
+    @keyframes receiptPop {
+      0% {
+        opacity: 0;
+        transform: translateY(35px) scale(0.94);
+      }
 
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
 
-        .hologram-card {
-            background: linear-gradient(135deg, #111726 0%, #151f33 50%, #0d1322 100%);
-            position: relative;
-            overflow: hidden;
-        }
+    .hologram-card {
+      background: linear-gradient(135deg, #111726 0%, #151f33 50%, #0d1322 100%);
+      position: relative;
+      overflow: hidden;
+    }
 
-        .leaflet-popup-content-wrapper {
-            background: #111726 !important;
-            color: #e2e8f0 !important;
-            border: 1px solid #1f293d !important;
-            border-radius: 8px !important;
-        }
+    .leaflet-popup-content-wrapper {
+      background: #111726 !important;
+      color: #e2e8f0 !important;
+      border: 1px solid #1f293d !important;
+      border-radius: 8px !important;
+    }
 
-        .leaflet-popup-tip {
-            background: #111726 !important;
-        }
+    .leaflet-popup-tip {
+      background: #111726 !important;
+    }
 
-        @media print {
-            body * {
-                visibility: hidden;
-            }
+    @media print {
+      body * {
+        visibility: hidden;
+      }
 
-            #printableReceipt,
-            #printableReceipt * {
-                visibility: visible;
-            }
+      #printableReceipt,
+      #printableReceipt * {
+        visibility: visible;
+      }
 
-            #printableReceipt {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                color: #000 !important;
-                background: #fff !important;
-                border: 2px solid #000 !important;
-                box-shadow: none !important;
-            }
+      #printableReceipt {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        color: #000 !important;
+        background: #fff !important;
+        border: 2px solid #000 !important;
+        box-shadow: none !important;
+      }
 
-            .no-print {
-                display: none !important;
-            }
-        }
-    </style>
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
 </head>
 
 <body class="dark antialiased bg-[#080b11] cyber-grid min-h-screen">
-    <div id="root"></div>
+  <div id="root"></div>
 
-    <script type="text/babel">
-        const { useState, useEffect, useMemo, useRef } = React;
+  <script type="text/babel">
+    const { useState, useEffect, useMemo, useRef } = React;
 
-        // ================= GLOBAL INITIAL DATABASE =================
-        const INITIAL_CASES = [
-            {
-                id: "RAK-8942",
-                receiptNo: "REC-2026-90412-E",
-                title: "Autonomous Ransomware Attack on Metro Grid",
-                category: "Cybercrime",
-                priority: "Critical",
-                riskScore: 96,
-                status: "Active Breach",
-                complainant: "Metro Power Authority",
-                nationalId: "CORP-GRID-09",
-                location: "Financial District, Sector 4",
-                coords: [40.7128, -74.0060],
-                time: "10 mins ago",
-                investigator: "Det. A. Vance (Cyber Unit)",
-                summary: "Polymorphic payload attempting privilege escalation in central power grid SCADA servers.",
-                timeline: [
-                    { time: "22:15", title: "SCADA Port 502 Intrusion", detail: "RAKSHAK Sentinel detected brute-force payload originating from IP 185.220.101.4.", type: "alert" },
-                    { time: "22:24", title: "Privilege Escalation Alert", detail: "Root certificate spoofing flagged by Threat Analyzer.", type: "warning" },
-                    { time: "22:31", title: "Automated Quarantine Initiated", detail: "Grid Substation 09 isolated to failover network.", type: "success" },
-                ]
-            },
-            {
-                id: "RAK-8941",
-                receiptNo: "REC-2026-88120-E",
-                title: "Armed Robbery in Progress at Zenith Vault",
-                category: "Armed Robbery",
-                priority: "Critical",
-                riskScore: 91,
-                status: "Tactical Response",
-                complainant: "Zenith Vault Security",
-                nationalId: "SEC-88291",
-                location: "104 Grand Avenue, Midtown",
-                coords: [40.7589, -73.9851],
-                time: "18 mins ago",
-                investigator: "Lt. M. Briggs (SWAT 3)",
-                summary: "4 masked suspects armed with military-grade weapons. Hostage threat detected by acoustic telemetry.",
-                timeline: [
-                    { time: "22:04", title: "Silent Panic Alarm", detail: "Biometric vault sensor triggered manual override.", type: "alert" },
-                    { time: "22:08", title: "CCTV Recognition", detail: "Suspect profile matching 'Apex Syndicate' members.", type: "info" }
-                ]
-            },
-            {
-                id: "RAK-8939",
-                receiptNo: "REC-2026-74910-E",
-                title: "Synthetic Narcotics Distribution Ring",
-                category: "Narcotics",
-                priority: "High",
-                riskScore: 84,
-                status: "Under Surveillance",
-                complainant: "Harbor Port Authority",
-                nationalId: "PORT-SEC-14",
-                location: "Pier 42 Logistics Hub",
-                coords: [40.7081, -74.0145],
-                time: "42 mins ago",
-                investigator: "Det. S. Chen (DEA Taskforce)",
-                summary: "Encrypted drone drop-offs intercepted by maritime radio triangulation.",
-                timeline: [
-                    { time: "21:30", title: "Low-Altitude Radar Anomaly", detail: "Unregistered autonomous cargo drone tracked at 120ft.", type: "warning" }
-                ]
-            }
-        ];
+    // ================= GLOBAL INITIAL DATABASE =================
+    const INITIAL_CASES = [
+      {
+        id: "RAK-8942",
+        receiptNo: "REC-2026-90412-E",
+        title: "Autonomous Ransomware Attack on Metro Grid",
+        category: "Cybercrime",
+        priority: "Critical",
+        riskScore: 96,
+        status: "Active Breach",
+        complainant: "Metro Power Authority",
+        nationalId: "CORP-GRID-09",
+        location: "Financial District, Sector 4",
+        coords: [40.7128, -74.0060],
+        time: "10 mins ago",
+        investigator: "Det. A. Vance (Cyber Unit)",
+        summary: "Polymorphic payload attempting privilege escalation in central power grid SCADA servers.",
+        timeline: [
+          { time: "22:15", title: "SCADA Port 502 Intrusion", detail: "RAKSHAK Sentinel detected brute-force payload originating from IP 185.220.101.4.", type: "alert" },
+          { time: "22:24", title: "Privilege Escalation Alert", detail: "Root certificate spoofing flagged by Threat Analyzer.", type: "warning" },
+          { time: "22:31", title: "Automated Quarantine Initiated", detail: "Grid Substation 09 isolated to failover network.", type: "success" },
+        ]
+      },
+      {
+        id: "RAK-8941",
+        receiptNo: "REC-2026-88120-E",
+        title: "Armed Robbery in Progress at Zenith Vault",
+        category: "Armed Robbery",
+        priority: "Critical",
+        riskScore: 91,
+        status: "Tactical Response",
+        complainant: "Zenith Vault Security",
+        nationalId: "SEC-88291",
+        location: "104 Grand Avenue, Midtown",
+        coords: [40.7589, -73.9851],
+        time: "18 mins ago",
+        investigator: "Lt. M. Briggs (SWAT 3)",
+        summary: "4 masked suspects armed with military-grade weapons. Hostage threat detected by acoustic telemetry.",
+        timeline: [
+          { time: "22:04", title: "Silent Panic Alarm", detail: "Biometric vault sensor triggered manual override.", type: "alert" },
+          { time: "22:08", title: "CCTV Recognition", detail: "Suspect profile matching 'Apex Syndicate' members.", type: "info" }
+        ]
+      },
+      {
+        id: "RAK-8939",
+        receiptNo: "REC-2026-74910-E",
+        title: "Synthetic Narcotics Distribution Ring",
+        category: "Narcotics",
+        priority: "High",
+        riskScore: 84,
+        status: "Under Surveillance",
+        complainant: "Harbor Port Authority",
+        nationalId: "PORT-SEC-14",
+        location: "Pier 42 Logistics Hub",
+        coords: [40.7081, -74.0145],
+        time: "42 mins ago",
+        investigator: "Det. S. Chen (DEA Taskforce)",
+        summary: "Encrypted drone drop-offs intercepted by maritime radio triangulation.",
+        timeline: [
+          { time: "21:30", title: "Low-Altitude Radar Anomaly", detail: "Unregistered autonomous cargo drone tracked at 120ft.", type: "warning" }
+        ]
+      }
+    ];
 
-        const MOST_WANTED = [
-            {
-                id: "WNT-904",
-                name: "Viktor 'ZeroDay' Kresnik",
-                alias: "The Phantom Broker",
-                crime: "Autonomous Ransomware & Power Grid SCADA Sabotage",
-                bounty: "$500,000",
-                danger: "DEFCON 1 - CRITICAL",
-                status: "RED NOTICE",
-                lastSeen: "Sector 04 Financial Substation",
-                icon: "fa-laptop-code"
-            },
-            {
-                id: "WNT-882",
-                name: "Marcus 'Viper' Briggs",
-                alias: "Midtown Syndicate Leader",
-                crime: "Armed Bank Robbery & Military Weapons Smuggling",
-                bounty: "$250,000",
-                danger: "EXTREMELY ARMED & DANGEROUS",
-                status: "INTERPOL ALERT",
-                lastSeen: "Midtown Vault Grand Ave",
-                icon: "fa-person-rifle"
-            },
-            {
-                id: "WNT-741",
-                name: "Elena 'Mirage' Rostova",
-                alias: "Deepfake Extortion Architect",
-                crime: "Identity Theft & $18M Corporate Fraud",
-                bounty: "$175,000",
-                danger: "HIGH FLEE RISK",
-                status: "ACTIVE PURSUIT",
-                lastSeen: "Hudson Yards District",
-                icon: "fa-fingerprint"
-            }
-        ];
+    const MOST_WANTED = [
+      {
+        id: "WNT-904",
+        name: "Viktor 'ZeroDay' Kresnik",
+        alias: "The Phantom Broker",
+        crime: "Autonomous Ransomware & Power Grid SCADA Sabotage",
+        bounty: "₹500,000",
+        danger: "DEFCON 1 - CRITICAL",
+        status: "RED NOTICE",
+        lastSeen: "Sector 04 Financial Substation",
+        icon: "fa-laptop-code"
+      },
+      {
+        id: "WNT-882",
+        name: "Marcus 'Viper' Briggs",
+        alias: "Midtown Syndicate Leader",
+        crime: "Armed Bank Robbery & Military Weapons Smuggling",
+        bounty: "₹250,000",
+        danger: "EXTREMELY ARMED & DANGEROUS",
+        status: "INTERPOL ALERT",
+        lastSeen: "Midtown Vault Grand Ave",
+        icon: "fa-person-rifle"
+      },
+      {
+        id: "WNT-741",
+        name: "Elena 'Mirage' Rostova",
+        alias: "Deepfake Extortion Architect",
+        crime: "Identity Theft & ₹18M Corporate Fraud",
+        bounty: "₹175,000",
+        danger: "HIGH FLEE RISK",
+        status: "ACTIVE PURSUIT",
+        lastSeen: "Hudson Yards District",
+        icon: "fa-fingerprint"
+      }
+    ];
 
-        const CATEGORIES = ["All", "Cybercrime", "Armed Robbery", "Narcotics", "Kidnapping", "Fraud", "Homicide"];
-        const PRIORITIES = ["All", "Critical", "High", "Medium", "Low"];
+    const CATEGORIES = ["All", "Cybercrime", "Armed Robbery", "Narcotics", "Kidnapping", "Fraud", "Homicide"];
+    const PRIORITIES = ["All", "Critical", "High", "Medium", "Low"];
 
-        const getPriorityBadge = (p) => {
-            switch (p) {
-                case "Critical": return "bg-red-500/20 text-red-400 border border-red-500/40";
-                case "High": return "bg-orange-500/20 text-orange-400 border border-orange-500/40";
-                case "Medium": return "bg-yellow-500/20 text-yellow-400 border border-yellow-500/40";
-                case "Low": return "bg-emerald-500/20 text-emerald-400 border border-emerald-500/40";
-                default: return "bg-slate-500/20 text-slate-400 border border-slate-500/40";
-            }
+    const getPriorityBadge = (p) => {
+      switch (p) {
+        case "Critical": return "bg-red-500/20 text-red-400 border border-red-500/40";
+        case "High": return "bg-orange-500/20 text-orange-400 border border-orange-500/40";
+        case "Medium": return "bg-yellow-500/20 text-yellow-400 border border-yellow-500/40";
+        case "Low": return "bg-emerald-500/20 text-emerald-400 border border-emerald-500/40";
+        default: return "bg-slate-500/20 text-slate-400 border border-slate-500/40";
+      }
+    };
+    const getRiskColor = (s) => (s >= 85 ? "text-red-500" : s >= 70 ? "text-orange-400" : s >= 50 ? "text-yellow-400" : "text-emerald-400");
+    const getRiskBg = (s) => (s >= 85 ? "bg-red-500" : s >= 70 ? "bg-orange-400" : s >= 50 ? "bg-yellow-400" : "bg-emerald-400");
+
+    // ================= MAIN APP =================
+    function App() {
+      const [currentRoute, setCurrentRoute] = useState('landing');
+      const [cases, setCases] = useState(INITIAL_CASES);
+      const [toast, setToast] = useState(null);
+
+      // OFFICER AUTHENTICATION STATE (Strictly False by default)
+      const [isOfficerLoggedIn, setIsOfficerLoggedIn] = useState(false);
+      const [currentUser, setCurrentUser] = useState(null);
+
+      const showToast = (message, type = 'info') => {
+        setToast({ message, type });
+        setTimeout(() => {
+          setToast(null);
+        }, 3200);
+      };
+
+      const navigateTo = (route) => {
+        // Route Guard: Central Database and Tactical Dashboard are ONLY accessible if officer is authenticated
+        if ((route === 'database' || route === 'dashboard') && !isOfficerLoggedIn) {
+          showToast("🔒 Authentication Required: Please sign in with your Police Shield ID to access the Central Database.", "alert");
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          setCurrentRoute('police_signin');
+          return;
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setCurrentRoute(route);
+      };
+
+      const handleOfficerLoginSuccess = (officerData) => {
+        setIsOfficerLoggedIn(true);
+        setCurrentUser(officerData);
+        showToast(`🛡️ Sworn Officer Authenticated: ${officerData.name} (${officerData.badgeId})`, "success");
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setCurrentRoute('database');
+      };
+
+      const handleOfficerLogout = () => {
+        setIsOfficerLoggedIn(false);
+        setCurrentUser(null);
+        showToast("🔒 Officer Terminal Locked & Signed Out.", "info");
+        navigateTo('landing');
+      };
+
+      const handleRegisterNewCase = (newCaseData) => {
+        const newEntry = {
+          id: newCaseData.caseId || ("RAK-" + Math.floor(1000 + Math.random() * 9000)),
+          receiptNo: newCaseData.receiptNo || ("REC-2026-" + Math.floor(10000 + Math.random() * 90000) + "-E"),
+          title: newCaseData.title || newCaseData.crimeCategory,
+          category: newCaseData.crimeCategory.includes("Cyber") ? "Cybercrime" :
+            newCaseData.crimeCategory.includes("Armed") ? "Armed Robbery" :
+              newCaseData.crimeCategory.includes("Assault") ? "Homicide" : "Fraud",
+          priority: newCaseData.emergencyThreat ? "Critical" : "High",
+          riskScore: newCaseData.emergencyThreat ? 95 : 79,
+          status: "Citizen E-FIR Filed",
+          complainant: newCaseData.complainantName || "Citizen John",
+          nationalId: newCaseData.nationalId || "NAT-884920",
+          location: newCaseData.incidentLocation || "Metro Pinned Area",
+          coords: newCaseData.coords || [40.7128, -74.0060],
+          time: "Just Now",
+          investigator: "Pending Assignment (Central Dispatch)",
+          summary: newCaseData.incidentDescription,
+          timeline: [
+            { time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }), title: "Citizen E-FIR Registered", detail: "Complainant verified. GPS coordinates logged to RAKSHAK Central Police Database.", type: "alert" }
+          ]
         };
-        const getRiskColor = (s) => (s >= 85 ? "text-red-500" : s >= 70 ? "text-orange-400" : s >= 50 ? "text-yellow-400" : "text-emerald-400");
-        const getRiskBg = (s) => (s >= 85 ? "bg-red-500" : s >= 70 ? "bg-orange-400" : s >= 50 ? "bg-yellow-400" : "bg-emerald-400");
+        setCases([newEntry, ...cases]);
+        showToast(`🚨 New Complaint ${newEntry.id} Logged to Police Database!`, "alert");
+      };
 
-        // ================= MAIN APP =================
-        function App() {
-            const [currentRoute, setCurrentRoute] = useState('landing');
-            const [cases, setCases] = useState(INITIAL_CASES);
-            const [toast, setToast] = useState(null); // { message, type: 'success'|'alert'|'info' }
-            const [currentUser, setCurrentUser] = useState({
-                role: "officer",
-                name: "Special Agent Vance",
-                badgeId: "SH-8942-NY",
-                clearance: "L4 - SCI"
-            });
+      return (
+        <div className="min-h-screen flex flex-col relative">
+          <div className="scanner-laser"></div>
 
-            const showToast = (message, type = 'info') => {
-                setToast({ message, type });
-                setTimeout(() => {
-                    setToast(null);
-                }, 3200);
-            };
-
-            const navigateTo = (route) => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                setCurrentRoute(route);
-            };
-
-            const handleRegisterNewCase = (newCaseData) => {
-                const newEntry = {
-                    id: newCaseData.caseId || ("RAK-" + Math.floor(1000 + Math.random() * 9000)),
-                    receiptNo: newCaseData.receiptNo || ("REC-2026-" + Math.floor(10000 + Math.random() * 90000) + "-E"),
-                    title: newCaseData.title || newCaseData.crimeCategory,
-                    category: newCaseData.crimeCategory.includes("Cyber") ? "Cybercrime" :
-                        newCaseData.crimeCategory.includes("Armed") ? "Armed Robbery" :
-                            newCaseData.crimeCategory.includes("Assault") ? "Homicide" : "Fraud",
-                    priority: newCaseData.emergencyThreat ? "Critical" : "High",
-                    riskScore: newCaseData.emergencyThreat ? 95 : 79,
-                    status: "Citizen E-FIR Filed",
-                    complainant: newCaseData.complainantName || "Citizen John",
-                    nationalId: newCaseData.nationalId || "NAT-884920",
-                    location: newCaseData.incidentLocation || "Metro Pinned Area",
-                    coords: newCaseData.coords || [40.7128, -74.0060],
-                    time: "Just Now",
-                    investigator: "Pending Assignment (Central Dispatch)",
-                    summary: newCaseData.incidentDescription,
-                    timeline: [
-                        { time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }), title: "Citizen E-FIR Registered", detail: "Complainant verified. GPS coordinates logged to RAKSHAK Central Police Database.", type: "alert" }
-                    ]
-                };
-                setCases([newEntry, ...cases]);
-                showToast(`🚨 New Complaint ${newEntry.id} Logged to Central Database!`, "alert");
-            };
-
-            return (
-                <div className="min-h-screen flex flex-col relative">
-                    <div className="scanner-laser"></div>
-
-                    {/* ================= ANIMATED HUD TOAST NOTIFICATION POPUP ================= */}
-                    {toast && (
-                        <div className="fixed top-16 right-6 z-50 animate-toast-slide no-print">
-                            <div className={`px-4 py-3 rounded-2xl border shadow-2xl flex items-center gap-3 text-xs font-mono backdrop-blur-md ${toast.type === 'alert' ? 'bg-red-950/90 border-red-500 text-red-200 shadow-red-950/60' :
-                                toast.type === 'success' ? 'bg-emerald-950/90 border-emerald-500 text-emerald-200 shadow-emerald-950/60' :
-                                    'bg-sky-950/90 border-sky-500 text-sky-200 shadow-sky-950/60'
-                                }`}>
-                                <div className={`w-8 h-8 rounded-xl flex items-center justify-center text-base ${toast.type === 'alert' ? 'bg-red-500/20 text-red-400' :
-                                    toast.type === 'success' ? 'bg-emerald-500/20 text-emerald-400' :
-                                        'bg-sky-500/20 text-sky-400'
-                                    }`}>
-                                    <i className={`fa-solid ${toast.type === 'alert' ? 'fa-triangle-exclamation animate-bounce' :
-                                        toast.type === 'success' ? 'fa-circle-check' : 'fa-bell'
-                                        }`}></i>
-                                </div>
-                                <div>
-                                    <div className="font-bold text-white uppercase text-[10px] tracking-wider">RAKSHAK COMMAND ALERT</div>
-                                    <div>{toast.message}</div>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* ================= UNIVERSAL TOP BREADCRUMB / SWITCHER BAR ================= */}
-                    <header className="bg-[#090d16] border-b border-[#1f293d] px-6 py-3.5 flex flex-wrap items-center justify-between text-sm font-mono text-slate-300 z-40 no-print shadow-lg">
-
-                        {/* Left Brand Badge */}
-                        <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-sky-500 to-blue-700 flex items-center justify-center text-white shadow-md shadow-sky-500/30">
-                                <i className="fa-solid fa-shield-halved text-sm"></i>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <span className="text-base font-black tracking-wider text-white">RAKSHAK</span>
-                                <span className="text-slate-500">|</span>
-                                <span className="text-xs font-bold text-sky-400 capitalize bg-sky-950/60 px-2 py-0.5 rounded border border-sky-800/40">
-                                    {currentRoute.replace('_', ' ')}
-                                </span>
-                            </div>
-                        </div>
-
-                        {/* Navigation Pills */}
-                        <div className="flex items-center gap-2 flex-wrap text-xs md:text-sm font-bold">
-                            <button onClick={() => navigateTo('landing')} className={`px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5 ${currentRoute === 'landing' ? 'bg-sky-500/20 text-sky-300 border border-sky-500/40 shadow-sm' : 'hover:bg-slate-800 text-slate-300'}`}>
-                                <i className="fa-solid fa-house text-xs"></i> Gateway Home
-                            </button>
-
-                            <button onClick={() => navigateTo('citizen_portal')} className={`px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5 ${currentRoute === 'citizen_portal' ? 'bg-sky-500/20 text-sky-300 border border-sky-500/40 shadow-sm' : 'hover:bg-slate-800 text-slate-300'}`}>
-                                <i className="fa-solid fa-map-pin text-sky-400 text-xs"></i> Citizen E-FIR
-                            </button>
-
-                            <button onClick={() => navigateTo('police_signin')} className={`px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5 ${currentRoute === 'police_signin' ? 'bg-red-500/20 text-red-300 border border-red-500/40 shadow-sm' : 'hover:bg-slate-800 text-slate-300'}`}>
-                                <i className="fa-solid fa-id-card text-red-400 text-xs"></i> Officer Login
-                            </button>
-
-                            <button onClick={() => navigateTo('database')} className={`px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5 ${currentRoute === 'database' ? 'bg-gradient-to-r from-amber-600 to-yellow-600 text-white font-bold border border-amber-400/50 shadow-md shadow-amber-600/20' : 'hover:bg-slate-800 text-amber-300 border border-amber-500/20'}`}>
-                                <i className="fa-solid fa-database text-xs"></i> Central Database ({cases.length})
-                            </button>
-
-                            <button onClick={() => navigateTo('dashboard')} className={`px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5 ${currentRoute === 'dashboard' ? 'bg-gradient-to-r from-red-600 to-rose-700 text-white font-bold shadow-md shadow-red-600/30' : 'hover:bg-slate-800 text-slate-300'}`}>
-                                <i className="fa-solid fa-gauge-high text-xs"></i> Tactical Dashboard
-                            </button>
-                        </div>
-
-                    </header>
-
-                    {/* ================= PAGE ROUTING ================= */}
-                    <div className="flex-1">
-                        {currentRoute === 'landing' && <LandingView onNavigate={navigateTo} showToast={showToast} casesCount={cases.length} />}
-                        {currentRoute === 'police_signin' && <PoliceSignInView onNavigate={navigateTo} showToast={showToast} onLoginSuccess={(u) => { setCurrentUser(u); navigateTo('database'); showToast("Sworn Officer Authenticated Successfully!", "success"); }} />}
-                        {currentRoute === 'police_signup' && <PoliceSignUpView onNavigate={navigateTo} onSignUpSuccess={(u) => { setCurrentUser(u); navigateTo('database'); showToast("Officer Shield Registered with Registry!", "success"); }} />}
-                        {currentRoute === 'citizen_portal' && <CitizenPortalView onNavigate={navigateTo} onSubmitCase={handleRegisterNewCase} />}
-                        {currentRoute === 'database' && <PoliceDatabaseView cases={cases} setCases={setCases} currentUser={currentUser} onNavigate={navigateTo} showToast={showToast} />}
-                        {currentRoute === 'dashboard' && <DashboardView cases={cases} setCases={setCases} currentUser={currentUser} onNavigate={navigateTo} showToast={showToast} />}
-                    </div>
-
-                    {/* ================= FOOTER ================= */}
-                    <footer className="p-4 bg-[#080b11] border-t border-[#1f293d] text-xs font-mono text-slate-500 no-print">
-                        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-                            <div className="flex items-center gap-2">
-                                <i className="fa-solid fa-shield-halved text-sky-400"></i>
-                                <span className="text-slate-300 font-bold">RAKSHAK</span> • Connected Public Safety, Central Police Database & GPS Telemetry Network
-                            </div>
-                            <div className="flex items-center gap-4 text-xs font-semibold">
-                                <button onClick={() => navigateTo('landing')} className="hover:text-slate-300">Gateway</button>
-                                <button onClick={() => navigateTo('citizen_portal')} className="hover:text-slate-300">File Incident</button>
-                                <button onClick={() => navigateTo('database')} className="hover:text-slate-300 text-amber-400">Central Database</button>
-                                <button onClick={() => navigateTo('dashboard')} className="hover:text-slate-300 text-sky-400">Tactical Dashboard</button>
-                            </div>
-                        </div>
-                    </footer>
+          {/* ================= ANIMATED HUD TOAST NOTIFICATION POPUP ================= */}
+          {toast && (
+            <div className="fixed top-16 right-6 z-50 animate-toast-slide no-print">
+              <div className={`px-4 py-3 rounded-2xl border shadow-2xl flex items-center gap-3 text-xs font-mono backdrop-blur-md ${toast.type === 'alert' ? 'bg-red-950/90 border-red-500 text-red-200 shadow-red-950/60' :
+                toast.type === 'success' ? 'bg-emerald-950/90 border-emerald-500 text-emerald-200 shadow-emerald-950/60' :
+                  'bg-sky-950/90 border-sky-500 text-sky-200 shadow-sky-950/60'
+                }`}>
+                <div className={`w-8 h-8 rounded-xl flex items-center justify-center text-base ${toast.type === 'alert' ? 'bg-red-500/20 text-red-400' :
+                  toast.type === 'success' ? 'bg-emerald-500/20 text-emerald-400' :
+                    'bg-sky-500/20 text-sky-400'
+                  }`}>
+                  <i className={`fa-solid ${toast.type === 'alert' ? 'fa-triangle-exclamation animate-bounce' :
+                    toast.type === 'success' ? 'fa-circle-check' : 'fa-bell'
+                    }`}></i>
                 </div>
-            );
+                <div>
+                  <div className="font-bold text-white uppercase text-[10px] tracking-wider">RAKSHAK COMMAND ALERT</div>
+                  <div>{toast.message}</div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ================= UNIVERSAL TOP BREADCRUMB / SWITCHER BAR ================= */}
+          <header className="bg-[#090d16] border-b border-[#1f293d] px-6 py-3.5 flex flex-wrap items-center justify-between text-sm font-mono text-slate-300 z-40 no-print shadow-lg gap-3">
+
+            {/* Left Brand Badge */}
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-sky-500 to-blue-700 flex items-center justify-center text-white shadow-md shadow-sky-500/30">
+                <i className="fa-solid fa-shield-halved text-sm"></i>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-base font-black tracking-wider text-white">RAKSHAK</span>
+                <span className="text-slate-500">|</span>
+                <span className="text-xs font-bold text-sky-400 capitalize bg-sky-950/60 px-2 py-0.5 rounded border border-sky-800/40">
+                  {currentRoute.replace('_', ' ')}
+                </span>
+              </div>
+            </div>
+
+            {/* Navigation Pills */}
+            <div className="flex items-center gap-2 flex-wrap text-xs md:text-sm font-bold">
+              <button onClick={() => navigateTo('landing')} className={`px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5 ${currentRoute === 'landing' ? 'bg-sky-500/20 text-sky-300 border border-sky-500/40 shadow-sm' : 'hover:bg-slate-800 text-slate-300'}`}>
+                <i className="fa-solid fa-house text-xs"></i> Gateway Home
+              </button>
+
+              <button onClick={() => navigateTo('citizen_portal')} className={`px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5 ${currentRoute === 'citizen_portal' ? 'bg-sky-500/20 text-sky-300 border border-sky-500/40 shadow-sm' : 'hover:bg-slate-800 text-slate-300'}`}>
+                <i className="fa-solid fa-map-pin text-sky-400 text-xs"></i> Citizen E-FIR
+              </button>
+
+              {/* CONDITIONAL POLICE NAVIGATION (LOCKED / UNLOCKED) */}
+              {!isOfficerLoggedIn ? (
+                <button onClick={() => navigateTo('police_signin')} className={`px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5 ${currentRoute === 'police_signin' ? 'bg-red-500/20 text-red-300 border border-red-500/40 shadow-sm' : 'hover:bg-slate-800 text-red-400 border border-red-500/20'}`}>
+                  <i className="fa-solid fa-lock text-xs"></i> Police Login (Restricted)
+                </button>
+              ) : (
+                <>
+                  <button onClick={() => navigateTo('database')} className={`px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5 ${currentRoute === 'database' ? 'bg-gradient-to-r from-amber-600 to-yellow-600 text-white font-bold border border-amber-400/50 shadow-md shadow-amber-600/20' : 'hover:bg-slate-800 text-amber-300 border border-amber-500/20'}`}>
+                    <i className="fa-solid fa-database text-xs"></i> Central Database ({cases.length})
+                  </button>
+
+                  <button onClick={() => navigateTo('dashboard')} className={`px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5 ${currentRoute === 'dashboard' ? 'bg-gradient-to-r from-red-600 to-rose-700 text-white font-bold shadow-md shadow-red-600/30' : 'hover:bg-slate-800 text-slate-300'}`}>
+                    <i className="fa-solid fa-gauge-high text-xs"></i> Tactical Dashboard
+                  </button>
+
+                  <div className="flex items-center gap-2 pl-2 border-l border-slate-700">
+                    <span className="hidden sm:inline text-xs font-mono bg-slate-900 px-2 py-1 rounded text-sky-300 border border-slate-800">
+                      🛡️ {currentUser?.badgeId}
+                    </span>
+                    <button onClick={handleOfficerLogout} title="Lock Officer Terminal" className="px-2.5 py-1.5 rounded-lg bg-red-950/80 hover:bg-red-900 text-red-400 border border-red-800 text-xs transition flex items-center gap-1">
+                      <i className="fa-solid fa-right-from-bracket"></i> Logout
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+
+          </header>
+
+          {/* ================= PAGE ROUTING (WITH AUTH GUARD) ================= */}
+          <div className="flex-1">
+            {currentRoute === 'landing' && <LandingView onNavigate={navigateTo} showToast={showToast} casesCount={cases.length} isOfficerLoggedIn={isOfficerLoggedIn} />}
+            {currentRoute === 'police_signin' && <PoliceSignInView onNavigate={navigateTo} showToast={showToast} onLoginSuccess={handleOfficerLoginSuccess} />}
+            {currentRoute === 'police_signup' && <PoliceSignUpView onNavigate={navigateTo} onSignUpSuccess={handleOfficerLoginSuccess} />}
+            {currentRoute === 'citizen_portal' && <CitizenPortalView onNavigate={navigateTo} onSubmitCase={handleRegisterNewCase} isOfficerLoggedIn={isOfficerLoggedIn} showToast={showToast} />}
+
+            {/* RESTRICTED: Central Database is only shown if officer is logged in */}
+            {currentRoute === 'database' && (
+              isOfficerLoggedIn ? (
+                <PoliceDatabaseView cases={cases} setCases={setCases} currentUser={currentUser} onNavigate={navigateTo} showToast={showToast} />
+              ) : (
+                <PoliceSignInView onNavigate={navigateTo} showToast={showToast} onLoginSuccess={handleOfficerLoginSuccess} />
+              )
+            )}
+
+            {/* RESTRICTED: Tactical Dashboard is only shown if officer is logged in */}
+            {currentRoute === 'dashboard' && (
+              isOfficerLoggedIn ? (
+                <DashboardView cases={cases} setCases={setCases} currentUser={currentUser} onNavigate={navigateTo} showToast={showToast} />
+              ) : (
+                <PoliceSignInView onNavigate={navigateTo} showToast={showToast} onLoginSuccess={handleOfficerLoginSuccess} />
+              )
+            )}
+          </div>
+
+          {/* ================= FOOTER ================= */}
+          <footer className="p-4 bg-[#080b11] border-t border-[#1f293d] text-xs font-mono text-slate-500 no-print">
+            <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div className="flex items-center gap-2">
+                <i className="fa-solid fa-shield-halved text-sky-400"></i>
+                <span className="text-slate-300 font-bold">RAKSHAK</span> • Connected Public Safety, Central Police Database & GPS Telemetry Network
+              </div>
+              <div className="flex items-center gap-4 text-xs font-semibold">
+                <button onClick={() => navigateTo('landing')} className="hover:text-slate-300">Gateway</button>
+                <button onClick={() => navigateTo('citizen_portal')} className="hover:text-slate-300">File Incident</button>
+                {isOfficerLoggedIn ? (
+                  <>
+                    <button onClick={() => navigateTo('database')} className="hover:text-slate-300 text-amber-400">Central Database</button>
+                    <button onClick={() => navigateTo('dashboard')} className="hover:text-slate-300 text-sky-400">Tactical Dashboard</button>
+                  </>
+                ) : (
+                  <button onClick={() => navigateTo('police_signin')} className="hover:text-slate-300 text-red-400">Police Login (Locked)</button>
+                )}
+              </div>
+            </div>
+          </footer>
+        </div>
+      );
+    }
+
+    // ================= 1. GATEWAY LANDING VIEW =================
+    function LandingView({ onNavigate, showToast, casesCount, isOfficerLoggedIn }) {
+      const [tipModalOpen, setTipModalOpen] = useState(false);
+      const [tipSuspect, setTipSuspect] = useState(null);
+      const [tipSubmitted, setTipSubmitted] = useState(false);
+
+      const openTip = (s) => {
+        setTipSuspect(s);
+        setTipSubmitted(false);
+        setTipModalOpen(true);
+      };
+
+      return (
+        <div className="max-w-7xl mx-auto px-6 py-12 space-y-14">
+
+          {/* Hero Header */}
+          <div className="text-center max-w-5xl mx-auto">
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-red-950/50 border border-red-800 text-red-400 text-xs sm:text-sm font-mono font-bold mb-6 shadow-lg shadow-red-950/40">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
+              <span>DEFCON 2 CRIME SURVEILLANCE • 100% CJIS COMPLIANT</span>
+            </div>
+
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white leading-tight tracking-tight">
+              RAKSHAK
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-sky-400 via-blue-400 to-indigo-400"> Public Safety</span>
+            </h1>
+
+            <p className="text-slate-300 text-base sm:text-lg lg:text-xl mt-5 max-w-3xl mx-auto leading-relaxed">
+              First time visiting RAKSHAK? Select your portal below to file a verified e-complaint with GPS map pinning or authenticate your sworn tactical shield to unlock the database.
+            </p>
+
+            {/* Portal Choice Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10 text-left">
+
+              {/* Citizen Card */}
+              <div className="p-7 rounded-2xl bg-[#111726] border-2 border-sky-500/40 hover:border-sky-500 transition-all duration-300 hover:scale-[1.02] shadow-2xl flex flex-col justify-between">
+                <div>
+                  <div className="flex justify-between items-center mb-4">
+                    <div className="w-14 h-14 rounded-xl bg-sky-500/20 text-sky-400 border border-sky-500/40 flex items-center justify-center text-2xl shadow-inner">
+                      <i className="fa-solid fa-map-location-dot"></i>
+                    </div>
+                    <span className="text-xs font-mono font-bold px-3 py-1 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30 uppercase">
+                      CITIZEN PORTAL
+                    </span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-black text-white">Public Case Registration & Map Pin</h3>
+                  <p className="text-sm text-slate-400 mt-2 leading-relaxed">Lodge an E-FIR, select your exact location on the interactive map, and receive an official E-Receipt.</p>
+                </div>
+                <div className="mt-8 pt-5 border-t border-[#1f293d] grid grid-cols-2 gap-3">
+                  <button onClick={() => onNavigate('citizen_portal')} className="py-3 rounded-xl bg-[#1a233a] hover:bg-slate-800 text-slate-200 text-sm font-bold border border-slate-700 transition">Citizen Login</button>
+                  <button onClick={() => onNavigate('citizen_portal')} className="py-3 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 text-white text-sm font-black shadow-lg shadow-sky-600/30 transition">File & Pin on Map</button>
+                </div>
+              </div>
+
+              {/* Police Card */}
+              <div className="p-7 rounded-2xl bg-[#111726] border-2 border-red-500/40 hover:border-red-500 transition-all duration-300 hover:scale-[1.02] shadow-2xl flex flex-col justify-between">
+                <div>
+                  <div className="flex justify-between items-center mb-4">
+                    <div className="w-14 h-14 rounded-xl bg-red-500/20 text-red-400 border border-red-500/40 flex items-center justify-center text-2xl shadow-inner">
+                      <i className="fa-solid fa-database"></i>
+                    </div>
+                    <span className="text-xs font-mono font-bold px-3 py-1 rounded bg-red-500/20 text-red-300 border border-red-500/30 uppercase">
+                      POLICE ONLY • RESTRICTED
+                    </span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-black text-white">Police Central Database & Terminal</h3>
+                  <p className="text-sm text-slate-400 mt-2 leading-relaxed">
+                    Search the master database of citizen filed complaints, inspect GPS pins, and export dossiers. <strong>Requires Sworn Police ID Authentication.</strong>
+                  </p>
+                </div>
+                <div className="mt-8 pt-5 border-t border-[#1f293d] grid grid-cols-2 gap-3">
+                  <button onClick={() => onNavigate('police_signin')} className="py-3 rounded-xl bg-[#1a233a] hover:bg-slate-800 text-slate-200 text-sm font-bold border border-slate-700 transition">
+                    <i className="fa-solid fa-id-badge mr-1.5 text-red-400"></i> Officer Login
+                  </button>
+                  <button onClick={() => onNavigate('database')} className="py-3 rounded-xl bg-gradient-to-r from-amber-600 to-yellow-600 text-white text-sm font-black shadow-lg shadow-amber-600/30 transition flex items-center justify-center gap-1.5">
+                    {!isOfficerLoggedIn && <i className="fa-solid fa-lock text-xs"></i>}
+                    <span>{isOfficerLoggedIn ? "Open Database" : "Unlock Database"}</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* Department Statistics Section */}
+          <div className="p-8 rounded-2xl bg-[#0c111d] border border-[#1f293d] space-y-8 shadow-xl">
+            <div className="text-center">
+              <span className="text-xs font-mono text-sky-400 font-bold uppercase tracking-widest px-3.5 py-1 rounded-full bg-sky-950/60 border border-sky-800/40">
+                OFFICIAL TRANSPARENCY METRICS
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-white mt-3">Cases Solved by Police & Clearance Rate</h2>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="p-5 rounded-xl bg-[#111726] border border-[#1f293d]">
+                <span className="text-xs font-mono text-slate-400 font-bold">CASES SOLVED BY POLICE</span>
+                <div className="text-3xl font-black text-white font-mono mt-1">14,892 <span className="text-xs text-emerald-400 font-normal">+184 this wk</span></div>
+                <div className="w-full bg-slate-800 h-1.5 rounded-full mt-3"><div className="bg-emerald-500 h-full w-[94%]"></div></div>
+              </div>
+
+              <div className="p-5 rounded-xl bg-[#111726] border border-[#1f293d]">
+                <span className="text-xs font-mono text-sky-400 font-bold">CASE CLEARANCE RATE</span>
+                <div className="text-3xl font-black text-sky-400 font-mono mt-1">94.8% <span className="text-xs text-emerald-400 font-normal">Assisted</span></div>
+                <div className="w-full bg-slate-800 h-1.5 rounded-full mt-3"><div className="bg-sky-500 h-full w-[94.8%]"></div></div>
+              </div>
+
+              <div className="p-5 rounded-xl bg-[#111726] border border-[#1f293d]">
+                <span className="text-xs font-mono text-red-400 font-bold">CRIMINAL RATE REDUCTION</span>
+                <div className="text-3xl font-black text-red-400 font-mono mt-1">-24.6% <span className="text-xs text-slate-400 font-normal">YoY</span></div>
+                <div className="w-full bg-slate-800 h-1.5 rounded-full mt-3"><div className="bg-red-500 h-full w-[76%]"></div></div>
+              </div>
+
+              <div className="p-5 rounded-xl bg-[#111726] border border-[#1f293d]">
+                <span className="text-xs font-mono text-amber-400 font-bold">AVG RESPONSE SPEED</span>
+                <div className="text-3xl font-black text-white font-mono mt-1">3.4 min <span className="text-xs text-emerald-400 font-normal">Rapid GPS</span></div>
+                <div className="w-full bg-slate-800 h-1.5 rounded-full mt-3"><div className="bg-amber-500 h-full w-[88%]"></div></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Most Wanted Intelligence Gallery */}
+          <div>
+            <div className="flex flex-wrap items-center justify-between mb-8 gap-4">
+              <div>
+                <span className="text-xs sm:text-sm font-mono text-red-400 font-bold uppercase tracking-widest flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span> MOST WANTED GALLERY
+                </span>
+                <h3 className="text-2xl sm:text-4xl font-black text-white mt-1">Federal & Metro Fugitive Watch</h3>
+              </div>
+              <span className="text-sm font-mono text-slate-400 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
+                Total Bounties: <strong className="text-amber-400">$925,000</strong>
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {MOST_WANTED.map(w => (
+                <div key={w.id} className="p-6 rounded-2xl bg-[#111726] border border-[#1f293d] hover:border-red-500/60 transition flex flex-col justify-between shadow-xl">
+                  <div>
+                    <div className="flex justify-between items-center text-xs font-mono mb-4">
+                      <span className="bg-red-950/80 text-red-400 px-2.5 py-1 rounded border border-red-800 font-bold">{w.status}</span>
+                      <span className="text-amber-400 font-bold text-sm">Bounty: {w.bounty}</span>
+                    </div>
+
+                    <div className="h-36 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-4xl text-red-400 mb-4 shadow-inner">
+                      <i className={`fa-solid ${w.icon}`}></i>
+                    </div>
+
+                    <h4 className="text-lg font-black text-white">{w.name}</h4>
+                    <p className="text-xs text-sky-400 font-mono font-bold">Alias: "{w.alias}"</p>
+                    <p className="text-xs text-slate-400 mt-2.5 leading-relaxed">{w.crime}</p>
+                  </div>
+
+                  <button
+                    onClick={() => openTip(w)}
+                    className="w-full mt-5 py-2.5 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white border border-red-500/40 text-xs font-mono font-bold transition flex items-center justify-center gap-2"
+                  >
+                    <i className="fa-solid fa-eye"></i>
+                    <span>Submit Anonymous Tip</span>
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ================= ANIMATED ANONYMOUS TIP MODAL ================= */}
+          {tipModalOpen && (
+            <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 animate-backdrop-fade">
+              <div className="bg-[#0f1626] border-2 border-red-500/70 rounded-3xl max-w-md w-full p-7 shadow-2xl shadow-red-950/50 animate-modal-pop">
+                {!tipSubmitted ? (
+                  <div>
+                    <div className="flex justify-between items-center pb-3.5 border-b border-slate-700">
+                      <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                        <i className="fa-solid fa-user-secret text-red-400"></i>
+                        <span>Confidential Tip: {tipSuspect?.name}</span>
+                      </h3>
+                      <button onClick={() => setTipModalOpen(false)} className="text-slate-400 hover:text-white transition">
+                        <i className="fa-solid fa-xmark text-lg"></i>
+                      </button>
+                    </div>
+                    <form onSubmit={(e) => { e.preventDefault(); setTipSubmitted(true); showToast("Anonymous Tip Transmitted to Dispatch!", "success"); }} className="space-y-4 my-5 text-xs sm:text-sm">
+                      <div>
+                        <label className="text-slate-300 font-medium block mb-1">Sighting Location *</label>
+                        <input required placeholder="e.g. Near Metro Port 4" className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-white focus:border-red-500 focus:outline-none" />
+                      </div>
+                      <div>
+                        <label className="text-slate-300 font-medium block mb-1">Observations *</label>
+                        <textarea required rows={3} placeholder="Vehicle, direction, appearance..." className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-white focus:border-red-500 focus:outline-none"></textarea>
+                      </div>
+                      <button type="submit" className="w-full py-3.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-mono font-bold shadow-lg shadow-red-600/30 transition transform active:scale-95">
+                        Transmit Encrypted Tip
+                      </button>
+                    </form>
+                  </div>
+                ) : (
+                  <div className="p-6 text-center space-y-4 animate-modal-pop">
+                    <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 text-3xl mx-auto flex items-center justify-center border-2 border-emerald-500/40 animate-bounce">
+                      <i className="fa-solid fa-check"></i>
+                    </div>
+                    <h4 className="text-xl font-black text-white">Tip Encrypted & Transmitted</h4>
+                    <p className="text-xs sm:text-sm text-slate-400 font-mono">Your identity is 100% anonymized. Bounty credit will follow verification.</p>
+                    <button onClick={() => setTipModalOpen(false)} className="px-6 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-mono font-bold transition">
+                      Close Window
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // ================= 2. CITIZEN PORTAL VIEW =================
+    function CitizenPortalView({ onNavigate, onSubmitCase, isOfficerLoggedIn, showToast }) {
+      const [isLoggedIn, setIsLoggedIn] = useState(false);
+      const [showWarningModal, setShowWarningModal] = useState(false);
+      const [penaltyAcknowledged, setPenaltyAcknowledged] = useState(false);
+      const [caseSubmitted, setCaseSubmitted] = useState(false);
+      const [receiptData, setReceiptData] = useState(null);
+
+      const [pinnedCoords, setPinnedCoords] = useState([40.7128, -74.0060]);
+      const citizenMapRef = useRef(null);
+      const citizenMapInst = useRef(null);
+      const citizenMarkerRef = useRef(null);
+
+      const [citizenUser, setCitizenUser] = useState({
+        name: "John Doe",
+        email: "citizen.john@mail.com",
+        phone: "+1 (555) 019-2849",
+        nationalId: "NAT-ID-884920"
+      });
+
+      const [caseForm, setCaseForm] = useState({
+        crimeCategory: "Cyber Financial Fraud & Scam",
+        incidentLocation: "Financial District, Sector 4 (GPS: 40.7128, -74.0060)",
+        incidentDescription: "Unauthorized extraction of funds through phishing scam.",
+        emergencyThreat: true
+      });
+
+      useEffect(() => {
+        if (!isLoggedIn || caseSubmitted || !citizenMapRef.current) return;
+
+        if (!citizenMapInst.current) {
+          const map = L.map(citizenMapRef.current, {
+            center: pinnedCoords,
+            zoom: 13,
+            zoomControl: true
+          });
+          L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(map);
+
+          const pinIcon = L.divIcon({
+            className: 'citizen-pin',
+            html: `<div style="width:26px;height:26px;background:#38bdf8;border:2px solid #fff;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#000;font-weight:bold;box-shadow:0 0 12px #38bdf8;"><i class="fa-solid fa-location-dot text-xs"></i></div>`,
+            iconSize: [26, 26],
+            iconAnchor: [13, 13]
+          });
+
+          const marker = L.marker(pinnedCoords, { icon: pinIcon, draggable: true }).addTo(map);
+          citizenMarkerRef.current = marker;
+
+          map.on('click', (e) => {
+            const { lat, lng } = e.latlng;
+            marker.setLatLng([lat, lng]);
+            setPinnedCoords([lat, lng]);
+            setCaseForm(prev => ({
+              ...prev,
+              incidentLocation: `Sector GPS (${lat.toFixed(4)}, ${lng.toFixed(4)})`
+            }));
+          });
+
+          marker.on('dragend', () => {
+            const pos = marker.getLatLng();
+            setPinnedCoords([pos.lat, pos.lng]);
+            setCaseForm(prev => ({
+              ...prev,
+              incidentLocation: `Sector GPS (${pos.lat.toFixed(4)}, ${pos.lng.toFixed(4)})`
+            }));
+          });
+
+          citizenMapInst.current = map;
         }
+      }, [isLoggedIn, caseSubmitted]);
 
-        // ================= 1. GATEWAY LANDING VIEW (WITH ANIMATED POPUPS) =================
-        function LandingView({ onNavigate, showToast, casesCount }) {
-            const [tipModalOpen, setTipModalOpen] = useState(false);
-            const [tipSuspect, setTipSuspect] = useState(null);
-            const [tipSubmitted, setTipSubmitted] = useState(false);
+      const handleLogin = (e) => {
+        e.preventDefault();
+        setShowWarningModal(true);
+      };
 
-            const openTip = (s) => {
-                setTipSuspect(s);
-                setTipSubmitted(false);
-                setTipModalOpen(true);
-            };
+      const handleAcknowledgeAndProceed = () => {
+        if (!penaltyAcknowledged) {
+          alert("You must acknowledge the legal penalty declaration.");
+          return;
+        }
+        setShowWarningModal(false);
+        setIsLoggedIn(true);
+      };
 
-            return (
-                <div className="max-w-7xl mx-auto px-6 py-12 space-y-14">
+      const handleCaseSubmit = (e) => {
+        e.preventDefault();
+        const cid = "RAK-" + Math.floor(100000 + Math.random() * 900000);
+        const receiptNo = "REC-2026-" + Math.floor(10000 + Math.random() * 90000) + "-E";
+        const shaSignature = "SHA256: " + Array.from({ length: 32 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
 
-                    {/* Hero Header */}
-                    <div className="text-center max-w-5xl mx-auto">
-                        <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-red-950/50 border border-red-800 text-red-400 text-xs sm:text-sm font-mono font-bold mb-6 shadow-lg shadow-red-950/40">
-                            <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
-                            <span>DEFCON 2 CRIME SURVEILLANCE • 100% CJIS COMPLIANT</span>
-                        </div>
+        const fullReceipt = {
+          receiptNumber: receiptNo,
+          caseId: cid,
+          timestamp: new Date().toLocaleString(),
+          complainantName: citizenUser.name,
+          email: citizenUser.email,
+          phone: citizenUser.phone,
+          nationalId: citizenUser.nationalId,
+          crimeCategory: caseForm.crimeCategory,
+          incidentLocation: caseForm.incidentLocation,
+          coords: pinnedCoords,
+          summary: caseForm.incidentDescription,
+          assignedStation: "Metropolitan Central Precinct Sector 04",
+          status: "E-FIR Registered & Logged in RAKSHAK Police Database",
+          digitalSignature: shaSignature
+        };
 
-                        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white leading-tight tracking-tight">
-                            RAKSHAK
-                            <span className="bg-clip-text text-transparent bg-gradient-to-r from-sky-400 via-blue-400 to-indigo-400"> Public Safety</span>
-                        </h1>
+        setReceiptData(fullReceipt);
+        onSubmitCase({
+          caseId: cid,
+          receiptNo: receiptNo,
+          complainantName: citizenUser.name,
+          nationalId: citizenUser.nationalId,
+          coords: pinnedCoords,
+          title: caseForm.crimeCategory,
+          ...caseForm
+        });
+        setCaseSubmitted(true);
+      };
 
-                        <p className="text-slate-300 text-base sm:text-lg lg:text-xl mt-5 max-w-3xl mx-auto leading-relaxed">
-                            First time visiting RAKSHAK? Select your portal below to file a verified e-complaint with GPS map pinning or authenticate your sworn tactical shield.
-                        </p>
+      return (
+        <div className="max-w-4xl mx-auto px-6 py-10">
 
-                        {/* Portal Choice Cards */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10 text-left">
+          {/* STEP A: Login */}
+          {!isLoggedIn && (
+            <div className="bg-[#0c111d] border border-[#1f293d] rounded-3xl p-7 sm:p-10 shadow-2xl space-y-6 max-w-xl mx-auto animate-modal-pop">
+              <div className="text-center">
+                <div className="w-16 h-16 rounded-2xl bg-sky-500/10 border border-sky-500/30 text-sky-400 flex items-center justify-center text-3xl mx-auto mb-4">
+                  <i className="fa-solid fa-user-shield"></i>
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-black text-white">Citizen Portal Sign-In</h2>
+                <p className="text-xs sm:text-sm text-slate-400 mt-1.5">Sign in with your email to file a complaint, pin your incident on the map, and get an official RAKSHAK E-Receipt.</p>
+              </div>
 
-                            {/* Citizen Card */}
-                            <div className="p-7 rounded-2xl bg-[#111726] border-2 border-sky-500/40 hover:border-sky-500 transition-all duration-300 hover:scale-[1.02] shadow-2xl flex flex-col justify-between">
-                                <div>
-                                    <div className="flex justify-between items-center mb-4">
-                                        <div className="w-14 h-14 rounded-xl bg-sky-500/20 text-sky-400 border border-sky-500/40 flex items-center justify-center text-2xl shadow-inner">
-                                            <i className="fa-solid fa-map-location-dot"></i>
-                                        </div>
-                                        <span className="text-xs font-mono font-bold px-3 py-1 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30 uppercase">
-                                            CITIZEN PORTAL
-                                        </span>
-                                    </div>
-                                    <h3 className="text-xl sm:text-2xl font-black text-white">Public Case Registration & Map Pin</h3>
-                                    <p className="text-sm text-slate-400 mt-2 leading-relaxed">Lodge an E-FIR, select your exact location on the interactive map, and receive an official E-Receipt.</p>
-                                </div>
-                                <div className="mt-8 pt-5 border-t border-[#1f293d] grid grid-cols-2 gap-3">
-                                    <button onClick={() => onNavigate('citizen_portal')} className="py-3 rounded-xl bg-[#1a233a] hover:bg-slate-800 text-slate-200 text-sm font-bold border border-slate-700 transition">Citizen Login</button>
-                                    <button onClick={() => onNavigate('citizen_portal')} className="py-3 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 text-white text-sm font-black shadow-lg shadow-sky-600/30 transition">File & Pin on Map</button>
-                                </div>
-                            </div>
+              <form onSubmit={handleLogin} className="space-y-4 text-xs sm:text-sm">
+                <div>
+                  <label className="text-slate-300 block mb-1 font-medium">Email / Citizen ID *</label>
+                  <input required value={citizenUser.email} onChange={e => setCitizenUser({ ...citizenUser, email: e.target.value })} className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-white font-mono" />
+                </div>
+                <div>
+                  <label className="text-slate-300 block mb-1 font-medium">Password *</label>
+                  <input type="password" required defaultValue="••••••••••••" className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-white" />
+                </div>
+                <button type="submit" className="w-full py-3.5 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 text-white font-mono font-bold text-sm shadow-lg shadow-sky-600/30 transition transform active:scale-95">
+                  LOGIN TO REPORT INCIDENT
+                </button>
+              </form>
+            </div>
+          )}
 
-                            {/* Police Card */}
-                            <div className="p-7 rounded-2xl bg-[#111726] border-2 border-red-500/40 hover:border-red-500 transition-all duration-300 hover:scale-[1.02] shadow-2xl flex flex-col justify-between">
-                                <div>
-                                    <div className="flex justify-between items-center mb-4">
-                                        <div className="w-14 h-14 rounded-xl bg-red-500/20 text-red-400 border border-red-500/40 flex items-center justify-center text-2xl shadow-inner">
-                                            <i className="fa-solid fa-database"></i>
-                                        </div>
-                                        <span className="text-xs font-mono font-bold px-3 py-1 rounded bg-red-500/20 text-red-300 border border-red-500/30 uppercase">
-                                            POLICE & TACTICAL
-                                        </span>
-                                    </div>
-                                    <h3 className="text-xl sm:text-2xl font-black text-white">Police Central Database & Terminal</h3>
-                                    <p className="text-sm text-slate-400 mt-2 leading-relaxed">Search the master database of citizen filed complaints, inspect GPS pins, and dispatch response units.</p>
-                                </div>
-                                <div className="mt-8 pt-5 border-t border-[#1f293d] grid grid-cols-2 gap-3">
-                                    <button onClick={() => onNavigate('police_signin')} className="py-3 rounded-xl bg-[#1a233a] hover:bg-slate-800 text-slate-200 text-sm font-bold border border-slate-700 transition">Officer Sign-In</button>
-                                    <button onClick={() => onNavigate('database')} className="py-3 rounded-xl bg-gradient-to-r from-amber-600 to-yellow-600 text-white text-sm font-black shadow-lg shadow-amber-600/30 transition">View Database</button>
-                                </div>
-                            </div>
+          {/* ================= ANIMATED FALSE CASE WARNING POP-UP ================= */}
+          {showWarningModal && (
+            <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 animate-backdrop-fade">
+              <div className="bg-[#0f1626] border-2 border-red-500 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl shadow-red-950/60 space-y-4 animate-modal-pop">
+                <div className="flex items-center gap-3 pb-3 border-b border-red-500/30">
+                  <div className="w-12 h-12 rounded-xl bg-red-500/20 text-red-400 flex items-center justify-center text-2xl flex-shrink-0 animate-bounce">
+                    <i className="fa-solid fa-triangle-exclamation"></i>
+                  </div>
+                  <div>
+                    <span className="text-xs font-mono text-red-400 font-bold bg-red-950 px-2 py-0.5 rounded border border-red-800 uppercase">LEGAL STATUTORY WARNING</span>
+                    <h3 className="text-lg font-black text-white mt-1">Penalty For Filing False Cases</h3>
+                  </div>
+                </div>
 
-                        </div>
+                <div className="text-xs sm:text-sm text-slate-300 space-y-2 leading-relaxed">
+                  <p>Under <strong>Section 182 & 211 Penal Code (False Allegations)</strong> and <strong>RAKSHAK Law Enforcement Act</strong>:</p>
+                  <div className="p-3.5 rounded-xl bg-red-950/40 border border-red-900 text-xs font-mono text-slate-200 space-y-2">
+                    <div>⚖️ <strong>CRIMINAL ACTION:</strong> Immediate prosecution for fabricated complaints.</div>
+                    <div>💵 <strong>FINANCIAL PENALTY:</strong> Mandatory civil penalty of up to <strong>$10,000 / ₹50,000</strong> plus taskforce deployment costs.</div>
+                    <div>🔒 <strong>IMPRISONMENT:</strong> Up to <strong>2 Years Imprisonment</strong> upon conviction.</div>
+                  </div>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-[#111726] border border-[#1f293d]">
+                  <label className="flex items-start gap-2.5 text-xs text-slate-200 cursor-pointer">
+                    <input type="checkbox" checked={penaltyAcknowledged} onChange={e => setPenaltyAcknowledged(e.target.checked)} className="mt-0.5 text-red-500 w-4 h-4" />
+                    <span>I certify this report is accurate. I acknowledge that <strong>filing a false case carries heavy penalties and criminal prosecution</strong>.</span>
+                  </label>
+                </div>
+
+                <div className="flex justify-end gap-3 pt-2">
+                  <button onClick={() => setShowWarningModal(false)} className="px-4 py-2.5 rounded-xl border border-slate-700 text-slate-300 text-xs font-mono transition hover:bg-slate-800">Cancel</button>
+                  <button onClick={handleAcknowledgeAndProceed} disabled={!penaltyAcknowledged} className="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 disabled:opacity-40 text-white font-mono text-xs font-bold transition shadow-lg shadow-red-600/30 transform active:scale-95">
+                    Acknowledge & Proceed
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* STEP C: Case Registration Form with Interactive GPS Map Picker */}
+          {isLoggedIn && !caseSubmitted && (
+            <div className="bg-[#0c111d] border border-[#1f293d] rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 animate-modal-pop">
+              <div className="flex justify-between items-center border-b border-[#1f293d] pb-4">
+                <div>
+                  <h2 className="text-xl sm:text-2xl font-black text-white">E-FIR Incident Registration & GPS Mapping</h2>
+                  <p className="text-xs sm:text-sm text-slate-400 mt-0.5">Authenticated Citizen: <span className="text-sky-400 font-mono">{citizenUser.email}</span></p>
+                </div>
+                <span className="text-xs font-mono bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-3 py-1 rounded-lg font-bold">
+                  Warning Acknowledged
+                </span>
+              </div>
+
+              <form onSubmit={handleCaseSubmit} className="space-y-5 text-xs sm:text-sm">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-slate-300 block mb-1 font-medium">Complainant Full Name *</label>
+                    <input required value={citizenUser.name} onChange={e => setCitizenUser({ ...citizenUser, name: e.target.value })} className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-white" />
+                  </div>
+                  <div>
+                    <label className="text-slate-300 block mb-1 font-medium">National ID / Aadhaar / SSN *</label>
+                    <input required value={citizenUser.nationalId} onChange={e => setCitizenUser({ ...citizenUser, nationalId: e.target.value })} className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-white font-mono" />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-slate-300 block mb-1 font-medium">Crime Category *</label>
+                  <select value={caseForm.crimeCategory} onChange={e => setCaseForm({ ...caseForm, crimeCategory: e.target.value })} className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-white">
+                    <option value="Cyber Financial Fraud & Scam">Cyber Financial Fraud & Scam</option>
+                    <option value="Armed Robbery / Theft">Armed Robbery / Theft</option>
+                    <option value="Physical Assault / Threat">Physical Assault / Threat</option>
+                    <option value="Extortion / Blackmail">Extortion / Blackmail</option>
+                    <option value="Missing Person / Kidnapping">Missing Person / Kidnapping</option>
+                  </select>
+                </div>
+
+                {/* Interactive Leaflet Map Picker */}
+                <div className="space-y-2 p-4 rounded-2xl bg-slate-900/90 border border-[#1f293d]">
+                  <div className="flex justify-between items-center">
+                    <label className="text-sky-300 font-bold flex items-center gap-2 text-sm sm:text-base">
+                      <i className="fa-solid fa-map-pin text-red-400"></i>
+                      <span>Pin Exact Incident Location on Map *</span>
+                    </label>
+                    <span className="text-xs font-mono text-emerald-400 font-bold">
+                      GPS: {pinnedCoords[0].toFixed(4)}, {pinnedCoords[1].toFixed(4)}
+                    </span>
+                  </div>
+
+                  <p className="text-xs text-slate-400">
+                    Click anywhere on the map or drag the blue pin to mark the exact crime scene. This GPS location will be visible on the <strong>RAKSHAK Police Database</strong>.
+                  </p>
+
+                  <div className="relative h-64 rounded-xl overflow-hidden border border-slate-700">
+                    <div ref={citizenMapRef} className="w-full h-full"></div>
+                  </div>
+
+                  <input
+                    required
+                    value={caseForm.incidentLocation}
+                    onChange={e => setCaseForm({ ...caseForm, incidentLocation: e.target.value })}
+                    className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-white font-mono text-xs"
+                    placeholder="Address / Landmark description"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-slate-300 block mb-1 font-medium">Incident Narrative Details *</label>
+                  <textarea rows={3} required value={caseForm.incidentDescription} onChange={e => setCaseForm({ ...caseForm, incidentDescription: e.target.value })} className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-white"></textarea>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+                  <div>
+                    <div className="font-bold text-white text-sm">Mark as High-Threat Emergency?</div>
+                    <div className="text-xs text-slate-400">Triggers priority dispatch in RAKSHAK Central Database</div>
+                  </div>
+                  <input type="checkbox" checked={caseForm.emergencyThreat} onChange={e => setCaseForm({ ...caseForm, emergencyThreat: e.target.checked })} className="w-5 h-5 text-red-500" />
+                </div>
+
+                <button type="submit" className="w-full py-3.5 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 text-white font-mono font-bold text-sm shadow-lg shadow-sky-600/30 transition transform active:scale-95">
+                  SUBMIT OFFICIAL E-FIR & LOG GPS TO RAKSHAK DATABASE
+                </button>
+              </form>
+            </div>
+          )}
+
+          {/* STEP D: OFFICIAL DIGITAL E-RECEIPT (ANIMATED ENTRANCE) */}
+          {caseSubmitted && receiptData && (
+            <div className="space-y-6 animate-receipt-pop">
+              <div id="printableReceipt" className="bg-[#0f1626] border-2 border-sky-500/80 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-sky-950/50 space-y-6 text-slate-200 relative overflow-hidden">
+                <div className="flex flex-wrap items-start justify-between border-b border-slate-700/80 pb-4 gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-xl bg-sky-600/20 border border-sky-400/40 flex items-center justify-center text-sky-400 text-2xl animate-pulse">
+                      <i className="fa-solid fa-receipt"></i>
                     </div>
-
-                    {/* Department Statistics Section */}
-                    <div className="p-8 rounded-2xl bg-[#0c111d] border border-[#1f293d] space-y-8 shadow-xl">
-                        <div className="text-center">
-                            <span className="text-xs font-mono text-sky-400 font-bold uppercase tracking-widest px-3.5 py-1 rounded-full bg-sky-950/60 border border-sky-800/40">
-                                OFFICIAL TRANSPARENCY METRICS
-                            </span>
-                            <h2 className="text-2xl sm:text-3xl font-black text-white mt-3">Cases Solved by Police & Clearance Rate</h2>
-                        </div>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                            <div className="p-5 rounded-xl bg-[#111726] border border-[#1f293d]">
-                                <span className="text-xs font-mono text-slate-400 font-bold">CASES SOLVED BY POLICE</span>
-                                <div className="text-3xl font-black text-white font-mono mt-1">14,892 <span className="text-xs text-emerald-400 font-normal">+184 this wk</span></div>
-                                <div className="w-full bg-slate-800 h-1.5 rounded-full mt-3"><div className="bg-emerald-500 h-full w-[94%]"></div></div>
-                            </div>
-
-                            <div className="p-5 rounded-xl bg-[#111726] border border-[#1f293d]">
-                                <span className="text-xs font-mono text-sky-400 font-bold">CASE CLEARANCE RATE</span>
-                                <div className="text-3xl font-black text-sky-400 font-mono mt-1">94.8% <span className="text-xs text-emerald-400 font-normal">Assisted</span></div>
-                                <div className="w-full bg-slate-800 h-1.5 rounded-full mt-3"><div className="bg-sky-500 h-full w-[94.8%]"></div></div>
-                            </div>
-
-                            <div className="p-5 rounded-xl bg-[#111726] border border-[#1f293d]">
-                                <span className="text-xs font-mono text-red-400 font-bold">CRIMINAL RATE REDUCTION</span>
-                                <div className="text-3xl font-black text-red-400 font-mono mt-1">-24.6% <span className="text-xs text-slate-400 font-normal">YoY</span></div>
-                                <div className="w-full bg-slate-800 h-1.5 rounded-full mt-3"><div className="bg-red-500 h-full w-[76%]"></div></div>
-                            </div>
-
-                            <div className="p-5 rounded-xl bg-[#111726] border border-[#1f293d]">
-                                <span className="text-xs font-mono text-amber-400 font-bold">AVG RESPONSE SPEED</span>
-                                <div className="text-3xl font-black text-white font-mono mt-1">3.4 min <span className="text-xs text-emerald-400 font-normal">Rapid GPS</span></div>
-                                <div className="w-full bg-slate-800 h-1.5 rounded-full mt-3"><div className="bg-amber-500 h-full w-[88%]"></div></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Most Wanted Intelligence Gallery */}
                     <div>
-                        <div className="flex flex-wrap items-center justify-between mb-8 gap-4">
-                            <div>
-                                <span className="text-xs sm:text-sm font-mono text-red-400 font-bold uppercase tracking-widest flex items-center gap-2">
-                                    <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span> MOST WANTED GALLERY
-                                </span>
-                                <h3 className="text-2xl sm:text-4xl font-black text-white mt-1">Federal & Metro Fugitive Watch</h3>
-                            </div>
-                            <span className="text-sm font-mono text-slate-400 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
-                                Total Bounties: <strong className="text-amber-400">$925,000</strong>
-                            </span>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            {MOST_WANTED.map(w => (
-                                <div key={w.id} className="p-6 rounded-2xl bg-[#111726] border border-[#1f293d] hover:border-red-500/60 transition flex flex-col justify-between shadow-xl">
-                                    <div>
-                                        <div className="flex justify-between items-center text-xs font-mono mb-4">
-                                            <span className="bg-red-950/80 text-red-400 px-2.5 py-1 rounded border border-red-800 font-bold">{w.status}</span>
-                                            <span className="text-amber-400 font-bold text-sm">Bounty: {w.bounty}</span>
-                                        </div>
-
-                                        <div className="h-36 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-4xl text-red-400 mb-4 shadow-inner">
-                                            <i className={`fa-solid ${w.icon}`}></i>
-                                        </div>
-
-                                        <h4 className="text-lg font-black text-white">{w.name}</h4>
-                                        <p className="text-xs text-sky-400 font-mono font-bold">Alias: "{w.alias}"</p>
-                                        <p className="text-xs text-slate-400 mt-2.5 leading-relaxed">{w.crime}</p>
-                                    </div>
-
-                                    <button
-                                        onClick={() => openTip(w)}
-                                        className="w-full mt-5 py-2.5 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white border border-red-500/40 text-xs font-mono font-bold transition flex items-center justify-center gap-2"
-                                    >
-                                        <i className="fa-solid fa-eye"></i>
-                                        <span>Submit Anonymous Tip</span>
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
+                      <div className="text-xs font-mono font-black text-sky-400 uppercase tracking-widest">
+                        RAKSHAK POLICE & PUBLIC SAFETY BUREAU
+                      </div>
+                      <h2 className="text-xl font-black text-white">OFFICIAL E-FIR CITIZEN RECEIPT</h2>
+                      <p className="text-xs font-mono text-slate-400">{receiptData.assignedStation}</p>
                     </div>
+                  </div>
 
-                    {/* ================= ANIMATED ANONYMOUS TIP MODAL ================= */}
-                    {tipModalOpen && (
-                        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 animate-backdrop-fade">
-                            <div className="bg-[#0f1626] border-2 border-red-500/70 rounded-3xl max-w-md w-full p-7 shadow-2xl shadow-red-950/50 animate-modal-pop">
-                                {!tipSubmitted ? (
-                                    <div>
-                                        <div className="flex justify-between items-center pb-3.5 border-b border-slate-700">
-                                            <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                                                <i className="fa-solid fa-user-secret text-red-400"></i>
-                                                <span>Confidential Tip: {tipSuspect?.name}</span>
-                                            </h3>
-                                            <button onClick={() => setTipModalOpen(false)} className="text-slate-400 hover:text-white transition">
-                                                <i className="fa-solid fa-xmark text-lg"></i>
-                                            </button>
-                                        </div>
-                                        <form onSubmit={(e) => { e.preventDefault(); setTipSubmitted(true); showToast("Anonymous Tip Transmitted to Dispatch!", "success"); }} className="space-y-4 my-5 text-xs sm:text-sm">
-                                            <div>
-                                                <label className="text-slate-300 font-medium block mb-1">Sighting Location *</label>
-                                                <input required placeholder="e.g. Near Metro Port 4" className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-white focus:border-red-500 focus:outline-none" />
-                                            </div>
-                                            <div>
-                                                <label className="text-slate-300 font-medium block mb-1">Observations *</label>
-                                                <textarea required rows={3} placeholder="Vehicle, direction, appearance..." className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-white focus:border-red-500 focus:outline-none"></textarea>
-                                            </div>
-                                            <button type="submit" className="w-full py-3.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-mono font-bold shadow-lg shadow-red-600/30 transition transform active:scale-95">
-                                                Transmit Encrypted Tip
-                                            </button>
-                                        </form>
-                                    </div>
-                                ) : (
-                                    <div className="p-6 text-center space-y-4 animate-modal-pop">
-                                        <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 text-3xl mx-auto flex items-center justify-center border-2 border-emerald-500/40 animate-bounce">
-                                            <i className="fa-solid fa-check"></i>
-                                        </div>
-                                        <h4 className="text-xl font-black text-white">Tip Encrypted & Transmitted</h4>
-                                        <p className="text-xs sm:text-sm text-slate-400 font-mono">Your identity is 100% anonymized. Bounty credit will follow verification.</p>
-                                        <button onClick={() => setTipModalOpen(false)} className="px-6 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-mono font-bold transition">
-                                            Close Window
-                                        </button>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    )}
+                  <div className="text-right">
+                    <span className="text-xs font-mono px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold">
+                      LOGGED IN POLICE DATABASE
+                    </span>
+                    <div className="text-xs font-mono font-bold text-slate-300 mt-1">{receiptData.receiptNumber}</div>
+                    <div className="text-[10px] font-mono text-slate-500">{receiptData.timestamp}</div>
+                  </div>
                 </div>
-            );
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
+                  <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
+                    <span className="text-slate-500 text-[10px] uppercase block">CASE / FIR ID:</span>
+                    <span className="text-base font-black text-sky-400">{receiptData.caseId}</span>
+                  </div>
+
+                  <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
+                    <span className="text-slate-500 text-[10px] uppercase block">PINNED GPS COORDINATES:</span>
+                    <span className="text-base font-bold text-emerald-400">{receiptData.coords[0].toFixed(4)}, {receiptData.coords[1].toFixed(4)}</span>
+                  </div>
+
+                  <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
+                    <span className="text-slate-500 text-[10px] uppercase block">COMPLAINANT NAME:</span>
+                    <span className="text-white font-bold">{receiptData.complainantName} ({receiptData.nationalId})</span>
+                  </div>
+
+                  <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
+                    <span className="text-slate-500 text-[10px] uppercase block">INCIDENT LOCATION:</span>
+                    <span className="text-white truncate block">{receiptData.incidentLocation}</span>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 text-xs sm:text-sm">
+                  <span className="text-xs font-mono text-slate-400 font-bold uppercase block mb-1">OFFICIAL RECORDED STATEMENT:</span>
+                  <p className="text-slate-300 italic leading-relaxed">"{receiptData.summary}"</p>
+                </div>
+
+                <div className="pt-3 border-t border-slate-700/80 flex flex-wrap items-center justify-between gap-4 text-xs font-mono">
+                  <div>
+                    <div className="text-[10px] text-slate-500 uppercase">DIGITAL CRYPTO SIGNATURE:</div>
+                    <div className="text-xs text-sky-400 font-bold truncate max-w-sm">{receiptData.digitalSignature}</div>
+                  </div>
+                  <div className="flex items-center gap-2 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
+                    <i className="fa-solid fa-qrcode text-xl text-white"></i>
+                    <span className="text-xs text-slate-400 font-bold">DATABASE SYNCED</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center justify-between gap-3 no-print">
+                <button onClick={() => window.print()} className="px-5 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-mono text-xs sm:text-sm font-bold transition flex items-center gap-2 shadow-lg shadow-sky-600/20 transform active:scale-95">
+                  <i className="fa-solid fa-print"></i> Print Official E-Receipt
+                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => onNavigate('database')}
+                    className="px-5 py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-mono text-xs sm:text-sm font-bold transition transform active:scale-95 flex items-center gap-1.5"
+                  >
+                    {!isOfficerLoggedIn && <i className="fa-solid fa-lock text-xs"></i>}
+                    <span>View in Police Database</span>
+                  </button>
+                  <button onClick={() => setCaseSubmitted(false)} className="px-4 py-3 rounded-xl border border-slate-700 hover:bg-slate-800 text-slate-400 text-xs font-mono transition">
+                    File Another
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // ================= 3. POLICE CENTRAL DATABASE PAGE (RESTRICTED TO LOGGED-IN OFFICERS) =================
+    function PoliceDatabaseView({ cases, setCases, currentUser, onNavigate, showToast }) {
+      const [searchTerm, setSearchTerm] = useState("");
+      const [categoryFilter, setCategoryFilter] = useState("All");
+      const [selectedDbCase, setSelectedDbCase] = useState(cases[0] || null);
+
+      const dbMapRef = useRef(null);
+      const dbMapInst = useRef(null);
+      const dbMarkerRef = useRef(null);
+
+      const filteredCases = useMemo(() => {
+        return cases.filter(c => {
+          const matchCat = categoryFilter === "All" || c.category.toLowerCase() === categoryFilter.toLowerCase();
+          const matchSearch = c.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            c.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            c.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (c.complainant && c.complainant.toLowerCase().includes(searchTerm.toLowerCase()));
+          return matchCat && matchSearch;
+        });
+      }, [cases, categoryFilter, searchTerm]);
+
+      useEffect(() => {
+        if (!dbMapRef.current || !selectedDbCase) return;
+
+        if (!dbMapInst.current) {
+          const map = L.map(dbMapRef.current, {
+            center: selectedDbCase.coords,
+            zoom: 14,
+            zoomControl: false
+          });
+          L.control.zoom({ position: 'topright' }).addTo(map);
+          L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(map);
+          dbMapInst.current = map;
         }
 
-        // ================= 2. CITIZEN PORTAL VIEW (WITH ANIMATED MODALS & RECEIPT) =================
-        function CitizenPortalView({ onNavigate, onSubmitCase }) {
-            const [isLoggedIn, setIsLoggedIn] = useState(false);
-            const [showWarningModal, setShowWarningModal] = useState(false);
-            const [penaltyAcknowledged, setPenaltyAcknowledged] = useState(false);
-            const [caseSubmitted, setCaseSubmitted] = useState(false);
-            const [receiptData, setReceiptData] = useState(null);
+        const map = dbMapInst.current;
+        map.flyTo(selectedDbCase.coords, 14, { duration: 1 });
 
-            const [pinnedCoords, setPinnedCoords] = useState([40.7128, -74.0060]);
-            const citizenMapRef = useRef(null);
-            const citizenMapInst = useRef(null);
-            const citizenMarkerRef = useRef(null);
-
-            const [citizenUser, setCitizenUser] = useState({
-                name: "John Doe",
-                email: "citizen.john@mail.com",
-                phone: "+1 (555) 019-2849",
-                nationalId: "NAT-ID-884920"
-            });
-
-            const [caseForm, setCaseForm] = useState({
-                crimeCategory: "Cyber Financial Fraud & Scam",
-                incidentLocation: "Financial District, Sector 4 (GPS: 40.7128, -74.0060)",
-                incidentDescription: "Unauthorized extraction of funds through phishing scam.",
-                emergencyThreat: true
-            });
-
-            useEffect(() => {
-                if (!isLoggedIn || caseSubmitted || !citizenMapRef.current) return;
-
-                if (!citizenMapInst.current) {
-                    const map = L.map(citizenMapRef.current, {
-                        center: pinnedCoords,
-                        zoom: 13,
-                        zoomControl: true
-                    });
-                    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(map);
-
-                    const pinIcon = L.divIcon({
-                        className: 'citizen-pin',
-                        html: `<div style="width:26px;height:26px;background:#38bdf8;border:2px solid #fff;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#000;font-weight:bold;box-shadow:0 0 12px #38bdf8;"><i class="fa-solid fa-location-dot text-xs"></i></div>`,
-                        iconSize: [26, 26],
-                        iconAnchor: [13, 13]
-                    });
-
-                    const marker = L.marker(pinnedCoords, { icon: pinIcon, draggable: true }).addTo(map);
-                    citizenMarkerRef.current = marker;
-
-                    map.on('click', (e) => {
-                        const { lat, lng } = e.latlng;
-                        marker.setLatLng([lat, lng]);
-                        setPinnedCoords([lat, lng]);
-                        setCaseForm(prev => ({
-                            ...prev,
-                            incidentLocation: `Sector GPS (${lat.toFixed(4)}, ${lng.toFixed(4)})`
-                        }));
-                    });
-
-                    marker.on('dragend', () => {
-                        const pos = marker.getLatLng();
-                        setPinnedCoords([pos.lat, pos.lng]);
-                        setCaseForm(prev => ({
-                            ...prev,
-                            incidentLocation: `Sector GPS (${pos.lat.toFixed(4)}, ${pos.lng.toFixed(4)})`
-                        }));
-                    });
-
-                    citizenMapInst.current = map;
-                }
-            }, [isLoggedIn, caseSubmitted]);
-
-            const handleLogin = (e) => {
-                e.preventDefault();
-                setShowWarningModal(true);
-            };
-
-            const handleAcknowledgeAndProceed = () => {
-                if (!penaltyAcknowledged) {
-                    alert("You must acknowledge the legal penalty declaration.");
-                    return;
-                }
-                setShowWarningModal(false);
-                setIsLoggedIn(true);
-            };
-
-            const handleCaseSubmit = (e) => {
-                e.preventDefault();
-                const cid = "RAK-" + Math.floor(100000 + Math.random() * 900000);
-                const receiptNo = "REC-2026-" + Math.floor(10000 + Math.random() * 90000) + "-E";
-                const shaSignature = "SHA256: " + Array.from({ length: 32 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
-
-                const fullReceipt = {
-                    receiptNumber: receiptNo,
-                    caseId: cid,
-                    timestamp: new Date().toLocaleString(),
-                    complainantName: citizenUser.name,
-                    email: citizenUser.email,
-                    phone: citizenUser.phone,
-                    nationalId: citizenUser.nationalId,
-                    crimeCategory: caseForm.crimeCategory,
-                    incidentLocation: caseForm.incidentLocation,
-                    coords: pinnedCoords,
-                    summary: caseForm.incidentDescription,
-                    assignedStation: "Metropolitan Central Precinct Sector 04",
-                    status: "E-FIR Registered & Logged in RAKSHAK Police Database",
-                    digitalSignature: shaSignature
-                };
-
-                setReceiptData(fullReceipt);
-                onSubmitCase({
-                    caseId: cid,
-                    receiptNo: receiptNo,
-                    complainantName: citizenUser.name,
-                    nationalId: citizenUser.nationalId,
-                    coords: pinnedCoords,
-                    title: caseForm.crimeCategory,
-                    ...caseForm
-                });
-                setCaseSubmitted(true);
-            };
-
-            return (
-                <div className="max-w-4xl mx-auto px-6 py-10">
-
-                    {/* STEP A: Login */}
-                    {!isLoggedIn && (
-                        <div className="bg-[#0c111d] border border-[#1f293d] rounded-3xl p-7 sm:p-10 shadow-2xl space-y-6 max-w-xl mx-auto animate-modal-pop">
-                            <div className="text-center">
-                                <div className="w-16 h-16 rounded-2xl bg-sky-500/10 border border-sky-500/30 text-sky-400 flex items-center justify-center text-3xl mx-auto mb-4">
-                                    <i className="fa-solid fa-user-shield"></i>
-                                </div>
-                                <h2 className="text-2xl sm:text-3xl font-black text-white">Citizen Portal Sign-In</h2>
-                                <p className="text-xs sm:text-sm text-slate-400 mt-1.5">Sign in with your email to file a complaint, pin your incident on the map, and get an official RAKSHAK E-Receipt.</p>
-                            </div>
-
-                            <form onSubmit={handleLogin} className="space-y-4 text-xs sm:text-sm">
-                                <div>
-                                    <label className="text-slate-300 block mb-1 font-medium">Email / Citizen ID *</label>
-                                    <input required value={citizenUser.email} onChange={e => setCitizenUser({ ...citizenUser, email: e.target.value })} className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-white font-mono" />
-                                </div>
-                                <div>
-                                    <label className="text-slate-300 block mb-1 font-medium">Password *</label>
-                                    <input type="password" required defaultValue="••••••••••••" className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-white" />
-                                </div>
-                                <button type="submit" className="w-full py-3.5 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 text-white font-mono font-bold text-sm shadow-lg shadow-sky-600/30 transition transform active:scale-95">
-                                    LOGIN TO REPORT INCIDENT
-                                </button>
-                            </form>
-                        </div>
-                    )}
-
-                    {/* ================= ANIMATED FALSE CASE WARNING POP-UP ================= */}
-                    {showWarningModal && (
-                        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 animate-backdrop-fade">
-                            <div className="bg-[#0f1626] border-2 border-red-500 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl shadow-red-950/60 space-y-4 animate-modal-pop">
-                                <div className="flex items-center gap-3 pb-3 border-b border-red-500/30">
-                                    <div className="w-12 h-12 rounded-xl bg-red-500/20 text-red-400 flex items-center justify-center text-2xl flex-shrink-0 animate-bounce">
-                                        <i className="fa-solid fa-triangle-exclamation"></i>
-                                    </div>
-                                    <div>
-                                        <span className="text-xs font-mono text-red-400 font-bold bg-red-950 px-2 py-0.5 rounded border border-red-800 uppercase">LEGAL STATUTORY WARNING</span>
-                                        <h3 className="text-lg font-black text-white mt-1">Penalty For Filing False Cases</h3>
-                                    </div>
-                                </div>
-
-                                <div className="text-xs sm:text-sm text-slate-300 space-y-2 leading-relaxed">
-                                    <p>Under <strong>Section 182 & 211 Penal Code (False Allegations)</strong> and <strong>RAKSHAK Law Enforcement Act</strong>:</p>
-                                    <div className="p-3.5 rounded-xl bg-red-950/40 border border-red-900 text-xs font-mono text-slate-200 space-y-2">
-                                        <div>⚖️ <strong>CRIMINAL ACTION:</strong> Immediate prosecution for fabricated complaints.</div>
-                                        <div>💵 <strong>FINANCIAL PENALTY:</strong> Mandatory civil penalty of up to <strong>$10,000 / ₹50,000</strong> plus taskforce deployment costs.</div>
-                                        <div>🔒 <strong>IMPRISONMENT:</strong> Up to <strong>2 Years Imprisonment</strong> upon conviction.</div>
-                                    </div>
-                                </div>
-
-                                <div className="p-3.5 rounded-xl bg-[#111726] border border-[#1f293d]">
-                                    <label className="flex items-start gap-2.5 text-xs text-slate-200 cursor-pointer">
-                                        <input type="checkbox" checked={penaltyAcknowledged} onChange={e => setPenaltyAcknowledged(e.target.checked)} className="mt-0.5 text-red-500 w-4 h-4" />
-                                        <span>I certify this report is accurate. I acknowledge that <strong>filing a false case carries heavy penalties and criminal prosecution</strong>.</span>
-                                    </label>
-                                </div>
-
-                                <div className="flex justify-end gap-3 pt-2">
-                                    <button onClick={() => setShowWarningModal(false)} className="px-4 py-2.5 rounded-xl border border-slate-700 text-slate-300 text-xs font-mono transition hover:bg-slate-800">Cancel</button>
-                                    <button onClick={handleAcknowledgeAndProceed} disabled={!penaltyAcknowledged} className="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 disabled:opacity-40 text-white font-mono text-xs font-bold transition shadow-lg shadow-red-600/30 transform active:scale-95">
-                                        Acknowledge & Proceed
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* STEP C: Case Registration Form with Interactive GPS Map Picker */}
-                    {isLoggedIn && !caseSubmitted && (
-                        <div className="bg-[#0c111d] border border-[#1f293d] rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 animate-modal-pop">
-                            <div className="flex justify-between items-center border-b border-[#1f293d] pb-4">
-                                <div>
-                                    <h2 className="text-xl sm:text-2xl font-black text-white">E-FIR Incident Registration & GPS Mapping</h2>
-                                    <p className="text-xs sm:text-sm text-slate-400 mt-0.5">Authenticated Citizen: <span className="text-sky-400 font-mono">{citizenUser.email}</span></p>
-                                </div>
-                                <span className="text-xs font-mono bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-3 py-1 rounded-lg font-bold">
-                                    Warning Acknowledged
-                                </span>
-                            </div>
-
-                            <form onSubmit={handleCaseSubmit} className="space-y-5 text-xs sm:text-sm">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="text-slate-300 block mb-1 font-medium">Complainant Full Name *</label>
-                                        <input required value={citizenUser.name} onChange={e => setCitizenUser({ ...citizenUser, name: e.target.value })} className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-white" />
-                                    </div>
-                                    <div>
-                                        <label className="text-slate-300 block mb-1 font-medium">National ID / Aadhaar / SSN *</label>
-                                        <input required value={citizenUser.nationalId} onChange={e => setCitizenUser({ ...citizenUser, nationalId: e.target.value })} className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-white font-mono" />
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label className="text-slate-300 block mb-1 font-medium">Crime Category *</label>
-                                    <select value={caseForm.crimeCategory} onChange={e => setCaseForm({ ...caseForm, crimeCategory: e.target.value })} className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-white">
-                                        <option value="Cyber Financial Fraud & Scam">Cyber Financial Fraud & Scam</option>
-                                        <option value="Armed Robbery / Theft">Armed Robbery / Theft</option>
-                                        <option value="Physical Assault / Threat">Physical Assault / Threat</option>
-                                        <option value="Extortion / Blackmail">Extortion / Blackmail</option>
-                                        <option value="Missing Person / Kidnapping">Missing Person / Kidnapping</option>
-                                    </select>
-                                </div>
-
-                                {/* Interactive Leaflet Map Picker */}
-                                <div className="space-y-2 p-4 rounded-2xl bg-slate-900/90 border border-[#1f293d]">
-                                    <div className="flex justify-between items-center">
-                                        <label className="text-sky-300 font-bold flex items-center gap-2 text-sm sm:text-base">
-                                            <i className="fa-solid fa-map-pin text-red-400"></i>
-                                            <span>Pin Exact Incident Location on Map *</span>
-                                        </label>
-                                        <span className="text-xs font-mono text-emerald-400 font-bold">
-                                            GPS: {pinnedCoords[0].toFixed(4)}, {pinnedCoords[1].toFixed(4)}
-                                        </span>
-                                    </div>
-
-                                    <p className="text-xs text-slate-400">
-                                        Click anywhere on the map or drag the blue pin to mark the exact crime scene. This GPS location will be visible on the <strong>RAKSHAK Police Database</strong>.
-                                    </p>
-
-                                    <div className="relative h-64 rounded-xl overflow-hidden border border-slate-700">
-                                        <div ref={citizenMapRef} className="w-full h-full"></div>
-                                    </div>
-
-                                    <input
-                                        required
-                                        value={caseForm.incidentLocation}
-                                        onChange={e => setCaseForm({ ...caseForm, incidentLocation: e.target.value })}
-                                        className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-white font-mono text-xs"
-                                        placeholder="Address / Landmark description"
-                                    />
-                                </div>
-
-                                <div>
-                                    <label className="text-slate-300 block mb-1 font-medium">Incident Narrative Details *</label>
-                                    <textarea rows={3} required value={caseForm.incidentDescription} onChange={e => setCaseForm({ ...caseForm, incidentDescription: e.target.value })} className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-white"></textarea>
-                                </div>
-
-                                <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
-                                    <div>
-                                        <div className="font-bold text-white text-sm">Mark as High-Threat Emergency?</div>
-                                        <div className="text-xs text-slate-400">Triggers priority dispatch in RAKSHAK Central Database</div>
-                                    </div>
-                                    <input type="checkbox" checked={caseForm.emergencyThreat} onChange={e => setCaseForm({ ...caseForm, emergencyThreat: e.target.checked })} className="w-5 h-5 text-red-500" />
-                                </div>
-
-                                <button type="submit" className="w-full py-3.5 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 text-white font-mono font-bold text-sm shadow-lg shadow-sky-600/30 transition transform active:scale-95">
-                                    SUBMIT OFFICIAL E-FIR & LOG GPS TO RAKSHAK DATABASE
-                                </button>
-                            </form>
-                        </div>
-                    )}
-
-                    {/* STEP D: OFFICIAL DIGITAL E-RECEIPT (ANIMATED ENTRANCE) */}
-                    {caseSubmitted && receiptData && (
-                        <div className="space-y-6 animate-receipt-pop">
-                            <div id="printableReceipt" className="bg-[#0f1626] border-2 border-sky-500/80 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-sky-950/50 space-y-6 text-slate-200 relative overflow-hidden">
-                                <div className="flex flex-wrap items-start justify-between border-b border-slate-700/80 pb-4 gap-4">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-12 h-12 rounded-xl bg-sky-600/20 border border-sky-400/40 flex items-center justify-center text-sky-400 text-2xl animate-pulse">
-                                            <i className="fa-solid fa-receipt"></i>
-                                        </div>
-                                        <div>
-                                            <div className="text-xs font-mono font-black text-sky-400 uppercase tracking-widest">
-                                                RAKSHAK POLICE & PUBLIC SAFETY BUREAU
-                                            </div>
-                                            <h2 className="text-xl font-black text-white">OFFICIAL E-FIR CITIZEN RECEIPT</h2>
-                                            <p className="text-xs font-mono text-slate-400">{receiptData.assignedStation}</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="text-right">
-                                        <span className="text-xs font-mono px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold">
-                                            LOGGED IN POLICE DATABASE
-                                        </span>
-                                        <div className="text-xs font-mono font-bold text-slate-300 mt-1">{receiptData.receiptNumber}</div>
-                                        <div className="text-[10px] font-mono text-slate-500">{receiptData.timestamp}</div>
-                                    </div>
-                                </div>
-
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
-                                    <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
-                                        <span className="text-slate-500 text-[10px] uppercase block">CASE / FIR ID:</span>
-                                        <span className="text-base font-black text-sky-400">{receiptData.caseId}</span>
-                                    </div>
-
-                                    <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
-                                        <span className="text-slate-500 text-[10px] uppercase block">PINNED GPS COORDINATES:</span>
-                                        <span className="text-base font-bold text-emerald-400">{receiptData.coords[0].toFixed(4)}, {receiptData.coords[1].toFixed(4)}</span>
-                                    </div>
-
-                                    <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
-                                        <span className="text-slate-500 text-[10px] uppercase block">COMPLAINANT NAME:</span>
-                                        <span className="text-white font-bold">{receiptData.complainantName} ({receiptData.nationalId})</span>
-                                    </div>
-
-                                    <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
-                                        <span className="text-slate-500 text-[10px] uppercase block">INCIDENT LOCATION:</span>
-                                        <span className="text-white truncate block">{receiptData.incidentLocation}</span>
-                                    </div>
-                                </div>
-
-                                <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 text-xs sm:text-sm">
-                                    <span className="text-xs font-mono text-slate-400 font-bold uppercase block mb-1">OFFICIAL RECORDED STATEMENT:</span>
-                                    <p className="text-slate-300 italic leading-relaxed">"{receiptData.summary}"</p>
-                                </div>
-
-                                <div className="pt-3 border-t border-slate-700/80 flex flex-wrap items-center justify-between gap-4 text-xs font-mono">
-                                    <div>
-                                        <div className="text-[10px] text-slate-500 uppercase">DIGITAL CRYPTO SIGNATURE:</div>
-                                        <div className="text-xs text-sky-400 font-bold truncate max-w-sm">{receiptData.digitalSignature}</div>
-                                    </div>
-                                    <div className="flex items-center gap-2 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
-                                        <i className="fa-solid fa-qrcode text-xl text-white"></i>
-                                        <span className="text-xs text-slate-400 font-bold">DATABASE SYNCED</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="flex flex-wrap items-center justify-between gap-3 no-print">
-                                <button onClick={() => window.print()} className="px-5 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-mono text-xs sm:text-sm font-bold transition flex items-center gap-2 shadow-lg shadow-sky-600/20 transform active:scale-95">
-                                    <i className="fa-solid fa-print"></i> Print Official E-Receipt
-                                </button>
-                                <div className="flex items-center gap-2">
-                                    <button onClick={() => onNavigate('database')} className="px-5 py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-mono text-xs sm:text-sm font-bold transition transform active:scale-95">
-                                        <i className="fa-solid fa-database mr-1.5"></i> View in RAKSHAK Database
-                                    </button>
-                                    <button onClick={() => setCaseSubmitted(false)} className="px-4 py-3 rounded-xl border border-slate-700 hover:bg-slate-800 text-slate-400 text-xs font-mono transition">
-                                        File Another
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            );
+        if (dbMarkerRef.current) {
+          map.removeLayer(dbMarkerRef.current);
         }
 
-        // ================= 3. POLICE CENTRAL DATABASE PAGE =================
-        function PoliceDatabaseView({ cases, setCases, currentUser, onNavigate, showToast }) {
-            const [searchTerm, setSearchTerm] = useState("");
-            const [categoryFilter, setCategoryFilter] = useState("All");
-            const [selectedDbCase, setSelectedDbCase] = useState(cases[0] || null);
-
-            const dbMapRef = useRef(null);
-            const dbMapInst = useRef(null);
-            const dbMarkerRef = useRef(null);
-
-            const filteredCases = useMemo(() => {
-                return cases.filter(c => {
-                    const matchCat = categoryFilter === "All" || c.category.toLowerCase() === categoryFilter.toLowerCase();
-                    const matchSearch = c.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                        c.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                        c.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                        (c.complainant && c.complainant.toLowerCase().includes(searchTerm.toLowerCase()));
-                    return matchCat && matchSearch;
-                });
-            }, [cases, categoryFilter, searchTerm]);
-
-            useEffect(() => {
-                if (!dbMapRef.current || !selectedDbCase) return;
-
-                if (!dbMapInst.current) {
-                    const map = L.map(dbMapRef.current, {
-                        center: selectedDbCase.coords,
-                        zoom: 14,
-                        zoomControl: false
-                    });
-                    L.control.zoom({ position: 'topright' }).addTo(map);
-                    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(map);
-                    dbMapInst.current = map;
-                }
-
-                const map = dbMapInst.current;
-                map.flyTo(selectedDbCase.coords, 14, { duration: 1 });
-
-                if (dbMarkerRef.current) {
-                    map.removeLayer(dbMarkerRef.current);
-                }
-
-                const markerColor = selectedDbCase.priority === "Critical" ? "#ef4444" : "#38bdf8";
-                const customIcon = L.divIcon({
-                    className: 'db-pin',
-                    html: `
+        const markerColor = selectedDbCase.priority === "Critical" ? "#ef4444" : "#38bdf8";
+        const customIcon = L.divIcon({
+          className: 'db-pin',
+          html: `
             <div style="position:relative; width:34px; height:34px; display:flex; align-items:center; justify-content:center;">
               <div style="position:absolute; width:100%; height:100%; border-radius:50%; background:${markerColor}; opacity:0.4; animation:ping 2s infinite;"></div>
               <div style="width:24px; height:24px; border-radius:50%; background:#0f172a; border:2px solid ${markerColor}; display:flex; align-items:center; justify-content:center; color:${markerColor}; font-size:12px; font-weight:bold;">
@@ -1111,12 +1178,12 @@
               </div>
             </div>
           `,
-                    iconSize: [34, 34],
-                    iconAnchor: [17, 17]
-                });
+          iconSize: [34, 34],
+          iconAnchor: [17, 17]
+        });
 
-                const marker = L.marker(selectedDbCase.coords, { icon: customIcon }).addTo(map);
-                marker.bindPopup(`
+        const marker = L.marker(selectedDbCase.coords, { icon: customIcon }).addTo(map);
+        marker.bindPopup(`
           <div class="p-1 space-y-1 text-xs">
             <div class="font-mono text-sky-400 font-bold text-sm">${selectedDbCase.id}</div>
             <div class="text-white font-bold">${selectedDbCase.title}</div>
@@ -1125,311 +1192,474 @@
           </div>
         `).openPopup();
 
-                dbMarkerRef.current = marker;
-            }, [selectedDbCase]);
+        dbMarkerRef.current = marker;
+      }, [selectedDbCase]);
 
-            const handleStatusChange = (cid, newStatus) => {
-                const updated = cases.map(c => c.id === cid ? { ...c, status: newStatus } : c);
-                setCases(updated);
-                if (selectedDbCase && selectedDbCase.id === cid) {
-                    setSelectedDbCase({ ...selectedDbCase, status: newStatus });
-                }
-                showToast(`Status for ${cid} updated: ${newStatus}`, "info");
-            };
-
-            return (
-                <div className="max-w-7xl mx-auto px-6 py-10 space-y-8">
-
-                    {/* Header */}
-                    <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#1f293d] pb-5">
-                        <div>
-                            <div className="flex items-center gap-2.5">
-                                <span className="text-xs font-mono text-amber-400 font-bold uppercase tracking-widest px-3 py-1 rounded bg-amber-950/60 border border-amber-800">
-                                    RAKSHAK CENTRAL POLICE LEDGER
-                                </span>
-                                <span className="text-xs font-mono text-slate-400">RESTRICTED LAW ENFORCEMENT ACCESS</span>
-                            </div>
-                            <h2 className="text-2xl sm:text-4xl font-black text-white mt-1.5">Police Case Database & Citizen GPS Log</h2>
-                        </div>
-
-                        <div className="flex items-center gap-3">
-                            <button onClick={() => onNavigate('dashboard')} className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-mono text-xs sm:text-sm font-semibold border border-slate-700 flex items-center gap-2 transition">
-                                <i className="fa-solid fa-gauge-high text-sky-400"></i> Tactical Dashboard
-                            </button>
-                            <button onClick={() => onNavigate('citizen_portal')} className="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-mono text-xs sm:text-sm font-bold shadow-lg shadow-sky-600/30 flex items-center gap-2 transition">
-                                <i className="fa-solid fa-plus"></i> File Incident (Citizen)
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="md:col-span-2 relative">
-                            <i className="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
-                            <input
-                                type="text"
-                                value={searchTerm}
-                                onChange={e => setSearchTerm(e.target.value)}
-                                placeholder="Search database by Case ID, Citizen Complainant, Location, or Keywords..."
-                                className="w-full bg-[#111726] border border-[#1f293d] rounded-xl pl-11 pr-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
-                            />
-                        </div>
-
-                        <div>
-                            <select
-                                value={categoryFilter}
-                                onChange={e => setCategoryFilter(e.target.value)}
-                                className="w-full bg-[#111726] border border-[#1f293d] rounded-xl px-3.5 py-3 text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-amber-500"
-                            >
-                                {CATEGORIES.map(c => <option key={c} value={c}>Category: {c}</option>)}
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                        <div className="lg:col-span-7 bg-[#0c111d] border border-[#1f293d] rounded-2xl overflow-hidden shadow-xl flex flex-col">
-                            <div className="p-4 border-b border-[#1f293d] flex justify-between items-center">
-                                <h3 className="font-bold text-white text-base font-mono flex items-center gap-2">
-                                    <i className="fa-solid fa-table-list text-amber-400"></i>
-                                    <span>Registered Complaints Dossier ({filteredCases.length})</span>
-                                </h3>
-                                <span className="text-xs font-mono text-slate-400">Click any row to inspect GPS</span>
-                            </div>
-
-                            <div className="overflow-x-auto flex-1">
-                                <table className="w-full text-left text-xs sm:text-sm">
-                                    <thead className="bg-[#111726] text-slate-400 font-mono text-xs uppercase border-b border-[#1f293d]">
-                                        <tr>
-                                            <th className="py-3 px-3.5">Case ID</th>
-                                            <th className="py-3 px-3.5">Complainant</th>
-                                            <th className="py-3 px-3.5">Category</th>
-                                            <th className="py-3 px-3.5">Risk</th>
-                                            <th className="py-3 px-3.5">Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="divide-y divide-[#1a2333]">
-                                        {filteredCases.map(item => {
-                                            const isSelected = selectedDbCase && selectedDbCase.id === item.id;
-                                            return (
-                                                <tr
-                                                    key={item.id}
-                                                    onClick={() => setSelectedDbCase(item)}
-                                                    className={`cursor-pointer transition ${isSelected ? 'bg-amber-950/30 border-l-4 border-amber-500' : 'hover:bg-slate-900/60'}`}
-                                                >
-                                                    <td className="py-3.5 px-3.5 font-mono font-bold text-sky-400">{item.id}</td>
-                                                    <td className="py-3.5 px-3.5">
-                                                        <div className="font-bold text-white truncate max-w-[130px]">{item.complainant || "Citizen"}</div>
-                                                        <div className="text-xs font-mono text-slate-500 truncate max-w-[130px]">{item.location}</div>
-                                                    </td>
-                                                    <td className="py-3.5 px-3.5 font-mono text-slate-300">{item.category}</td>
-                                                    <td className="py-3.5 px-3.5 font-mono font-bold">
-                                                        <span className={getRiskColor(item.riskScore)}>{item.riskScore}%</span>
-                                                    </td>
-                                                    <td className="py-3.5 px-3.5">
-                                                        <span className="text-xs font-mono px-2.5 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700 truncate">
-                                                            {item.status}
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div className="lg:col-span-5 space-y-4">
-                            {selectedDbCase ? (
-                                <div className="bg-[#0c111d] border border-[#1f293d] rounded-2xl p-6 shadow-xl space-y-4 animate-modal-pop">
-                                    <div className="flex justify-between items-start border-b border-[#1f293d] pb-3.5">
-                                        <div>
-                                            <span className="text-xs font-mono text-amber-400 font-bold uppercase">CASE GPS TELEMETRY</span>
-                                            <h3 className="text-lg font-black text-white mt-1">{selectedDbCase.id} — {selectedDbCase.title}</h3>
-                                        </div>
-                                        <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${getPriorityBadge(selectedDbCase.priority)}`}>
-                                            {selectedDbCase.priority}
-                                        </span>
-                                    </div>
-
-                                    <div className="space-y-1.5">
-                                        <div className="flex justify-between text-xs font-mono">
-                                            <span className="text-slate-400">CITIZEN PINNED LOCATION:</span>
-                                            <span className="text-emerald-400 font-bold text-sm">{selectedDbCase.coords[0].toFixed(4)}, {selectedDbCase.coords[1].toFixed(4)}</span>
-                                        </div>
-                                        <div className="h-56 rounded-xl overflow-hidden border border-[#1f293d] relative">
-                                            <div ref={dbMapRef} className="w-full h-full"></div>
-                                        </div>
-                                    </div>
-
-                                    <div className="grid grid-cols-2 gap-2.5 text-xs font-mono">
-                                        <div className="p-3 rounded-xl bg-[#111726] border border-[#1f293d]">
-                                            <span className="text-slate-500 text-[10px] block">COMPLAINANT:</span>
-                                            <span className="text-white font-bold text-sm">{selectedDbCase.complainant || "Citizen User"}</span>
-                                        </div>
-                                        <div className="p-3 rounded-xl bg-[#111726] border border-[#1f293d]">
-                                            <span className="text-slate-500 text-[10px] block">RECEIPT ID:</span>
-                                            <span className="text-sky-400 font-bold text-sm">{selectedDbCase.receiptNo || "REC-2026-PENDING"}</span>
-                                        </div>
-                                    </div>
-
-                                    <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-xs sm:text-sm">
-                                        <span className="text-xs font-mono text-slate-400 uppercase block mb-1 font-bold">NARRATIVE STATEMENT:</span>
-                                        <p className="text-slate-300 leading-relaxed italic">"{selectedDbCase.summary}"</p>
-                                    </div>
-
-                                    <div className="pt-2 border-t border-[#1f293d] space-y-2">
-                                        <label className="text-xs font-mono text-slate-400 uppercase block font-bold">Update Investigation Status:</label>
-                                        <div className="grid grid-cols-3 gap-2">
-                                            <button onClick={() => handleStatusChange(selectedDbCase.id, "Tactical Response")} className="py-2 rounded-lg bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white border border-red-500/40 text-xs font-mono font-bold transition transform active:scale-95">
-                                                Dispatch Squad
-                                            </button>
-                                            <button onClick={() => handleStatusChange(selectedDbCase.id, "Under Investigation")} className="py-2 rounded-lg bg-sky-600/20 hover:bg-sky-600 text-sky-300 hover:text-white border border-sky-500/40 text-xs font-mono font-bold transition transform active:scale-95">
-                                                Assign Detective
-                                            </button>
-                                            <button onClick={() => handleStatusChange(selectedDbCase.id, "Resolved & Closed")} className="py-2 rounded-lg bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/40 text-xs font-mono font-bold transition transform active:scale-95">
-                                                Mark Solved
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            ) : (
-                                <div className="p-8 bg-[#0c111d] border border-[#1f293d] rounded-2xl text-center text-slate-500 text-sm font-mono">
-                                    Select a case from the table to view the citizen's pinned GPS location.
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            );
+      const handleStatusChange = (cid, newStatus) => {
+        const updated = cases.map(c => c.id === cid ? { ...c, status: newStatus } : c);
+        setCases(updated);
+        if (selectedDbCase && selectedDbCase.id === cid) {
+          setSelectedDbCase({ ...selectedDbCase, status: newStatus });
         }
+        showToast(`Status for ${cid} updated: ${newStatus}`, "info");
+      };
 
-        // ================= 4. POLICE SIGN-IN VIEW =================
-        function PoliceSignInView({ onNavigate, onLoginSuccess, showToast }) {
-            const [policeId, setPoliceId] = useState("SH-8942-NY");
-            return (
-                <div className="max-w-md mx-auto px-6 py-12">
-                    <div className="bg-[#0c111d] border border-[#1f293d] rounded-3xl p-7 sm:p-9 shadow-2xl space-y-6 animate-modal-pop">
-                        <div>
-                            <span className="text-xs font-mono text-red-400 font-bold bg-red-950 px-2.5 py-1 rounded border border-red-800">RESTRICTED TERMINAL</span>
-                            <h2 className="text-2xl sm:text-3xl font-black text-white mt-2">RAKSHAK Police Shield Authentication</h2>
-                        </div>
-                        <form onSubmit={(e) => { e.preventDefault(); onLoginSuccess({ name: "Special Agent Vance", badgeId: policeId, clearance: "L4 - SCI" }); }} className="space-y-4 text-xs sm:text-sm">
-                            <div>
-                                <label className="text-slate-300 block mb-1 font-medium">Police ID / Shield *</label>
-                                <input required value={policeId} onChange={e => setPoliceId(e.target.value)} className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-sky-400 font-mono" />
-                            </div>
-                            <div>
-                                <label className="text-slate-300 block mb-1 font-medium">Password *</label>
-                                <input type="password" required defaultValue="••••••••••••" className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-white" />
-                            </div>
-                            <button type="submit" className="w-full py-3.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-700 text-white font-mono font-bold text-sm shadow-lg shadow-red-600/30 transition transform active:scale-95">
-                                AUTHENTICATE & OPEN DATABASE
-                            </button>
-                        </form>
-                    </div>
+      // ================= DATABASE DOWNLOAD FUNCTIONS =================
+      const handleDownloadCSV = () => {
+        const headers = [
+          "Case ID",
+          "Receipt Number",
+          "Complainant Name",
+          "National ID",
+          "Crime Category",
+          "Case Title",
+          "Priority Level",
+          "Risk Score (%)",
+          "Investigation Status",
+          "Incident Address / Location",
+          "GPS Latitude",
+          "GPS Longitude",
+          "GPS Coordinates (Lat, Lng)",
+          "Logged Time",
+          "Assigned Officer",
+          "Narrative Summary"
+        ];
+
+        const rows = cases.map(c => [
+          `"${c.id}"`,
+          `"${c.receiptNo || 'N/A'}"`,
+          `"${(c.complainant || 'Citizen').replace(/"/g, '""')}"`,
+          `"${c.nationalId || 'N/A'}"`,
+          `"${c.category}"`,
+          `"${(c.title || '').replace(/"/g, '""')}"`,
+          `"${c.priority}"`,
+          c.riskScore,
+          `"${c.status}"`,
+          `"${(c.location || '').replace(/"/g, '""')}"`,
+          c.coords ? c.coords[0] : '',
+          c.coords ? c.coords[1] : '',
+          `"${c.coords ? `${c.coords[0].toFixed(4)}, ${c.coords[1].toFixed(4)}` : 'N/A'}"`,
+          `"${c.time || 'N/A'}"`,
+          `"${(c.investigator || 'Unassigned').replace(/"/g, '""')}"`,
+          `"${(c.summary || '').replace(/"/g, '""')}"`
+        ]);
+
+        const csvContent = "\uFEFF" + [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", `RAKSHAK_Police_Master_Database_${new Date().toISOString().slice(0, 10)}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showToast(`📥 Police Database with ${cases.length} GPS Cases Exported (CSV)!`, "success");
+      };
+
+      const handleDownloadJSON = () => {
+        const exportData = {
+          agency: "RAKSHAK Unified Tactical & Public Safety Network",
+          exportTimestamp: new Date().toISOString(),
+          officerCleared: currentUser?.name || "Special Agent",
+          officerBadge: currentUser?.badgeId || "SH-NY",
+          totalCases: cases.length,
+          dossiers: cases.map(c => ({
+            caseId: c.id,
+            receiptNumber: c.receiptNo || "N/A",
+            complainant: {
+              name: c.complainant || "Citizen User",
+              nationalId: c.nationalId || "N/A"
+            },
+            crimeClassification: c.category,
+            title: c.title,
+            priority: c.priority,
+            riskScore: c.riskScore,
+            status: c.status,
+            telemetryLocation: {
+              address: c.location,
+              latitude: c.coords ? c.coords[0] : null,
+              longitude: c.coords ? c.coords[1] : null,
+              formattedGPS: c.coords ? `${c.coords[0].toFixed(4)}, ${c.coords[1].toFixed(4)}` : "N/A"
+            },
+            timestamp: c.time,
+            assignedInvestigator: c.investigator,
+            statement: c.summary
+          }))
+        };
+
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportData, null, 2));
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.setAttribute("href", dataStr);
+        downloadAnchor.setAttribute("download", `RAKSHAK_Database_Dossier_${new Date().toISOString().slice(0, 10)}.json`);
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+        showToast("📥 Database Forensic Ledger Exported (JSON)!", "success");
+      };
+
+      return (
+        <div className="max-w-7xl mx-auto px-6 py-10 space-y-8 animate-modal-pop">
+
+          {/* Header */}
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#1f293d] pb-5">
+            <div>
+              <div className="flex items-center gap-2.5">
+                <span className="text-xs font-mono text-amber-400 font-bold uppercase tracking-widest px-3 py-1 rounded bg-amber-950/60 border border-amber-800 flex items-center gap-1.5">
+                  <i className="fa-solid fa-lock-open text-emerald-400"></i> RAKSHAK CENTRAL POLICE LEDGER
+                </span>
+                <span className="text-xs font-mono text-emerald-400">AUTHENTICATED: {currentUser?.name} ({currentUser?.badgeId})</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-black text-white mt-1.5">Police Case Database & Citizen GPS Log</h2>
+            </div>
+
+            {/* Action Buttons (Including Database Download) */}
+            <div className="flex items-center gap-2.5 flex-wrap">
+              <button
+                onClick={handleDownloadCSV}
+                title="Download complete database as Excel / CSV with exact GPS coordinates"
+                className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-xs sm:text-sm font-bold shadow-lg shadow-emerald-600/30 flex items-center gap-2 transition transform active:scale-95"
+              >
+                <i className="fa-solid fa-file-excel text-base"></i>
+                <span>Download Database (CSV)</span>
+              </button>
+
+              <button
+                onClick={handleDownloadJSON}
+                title="Download raw JSON forensic dataset"
+                className="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-mono text-xs sm:text-sm font-semibold border border-slate-700 flex items-center gap-2 transition transform active:scale-95"
+              >
+                <i className="fa-solid fa-download text-sky-400"></i>
+                <span>JSON</span>
+              </button>
+
+              <button onClick={() => onNavigate('dashboard')} className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-mono text-xs sm:text-sm font-semibold border border-slate-700 flex items-center gap-2 transition">
+                <i className="fa-solid fa-gauge-high text-sky-400"></i> Tactical Dashboard
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="md:col-span-2 relative">
+              <i className="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
+                placeholder="Search database by Case ID, Citizen Complainant, Location, or Keywords..."
+                className="w-full bg-[#111726] border border-[#1f293d] rounded-xl pl-11 pr-4 py-3 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+              />
+            </div>
+
+            <div>
+              <select
+                value={categoryFilter}
+                onChange={e => setCategoryFilter(e.target.value)}
+                className="w-full bg-[#111726] border border-[#1f293d] rounded-xl px-3.5 py-3 text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-amber-500"
+              >
+                {CATEGORIES.map(c => <option key={c} value={c}>Category: {c}</option>)}
+              </select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div className="lg:col-span-7 bg-[#0c111d] border border-[#1f293d] rounded-2xl overflow-hidden shadow-xl flex flex-col">
+              <div className="p-4 border-b border-[#1f293d] flex justify-between items-center flex-wrap gap-2">
+                <h3 className="font-bold text-white text-base font-mono flex items-center gap-2">
+                  <i className="fa-solid fa-table-list text-amber-400"></i>
+                  <span>Registered Complaints Dossier ({filteredCases.length})</span>
+                </h3>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={handleDownloadCSV}
+                    className="text-xs font-mono text-emerald-400 hover:text-emerald-300 flex items-center gap-1 font-bold underline cursor-pointer"
+                  >
+                    <i className="fa-solid fa-arrow-down"></i> Export GPS Rows
+                  </button>
+                  <span className="text-slate-600">|</span>
+                  <span className="text-xs font-mono text-slate-400">Click any row to inspect GPS</span>
                 </div>
-            );
-        }
+              </div>
 
-        // ================= 5. POLICE SIGN-UP VIEW =================
-        function PoliceSignUpView({ onNavigate, onSignUpSuccess }) {
-            return (
-                <div className="max-w-md mx-auto px-6 py-12">
-                    <div className="bg-[#0c111d] border border-[#1f293d] rounded-3xl p-7 sm:p-9 shadow-2xl space-y-6 animate-modal-pop">
-                        <h2 className="text-2xl sm:text-3xl font-black text-white">Register Sworn RAKSHAK Badge</h2>
-                        <form onSubmit={(e) => { e.preventDefault(); onSignUpSuccess({ name: "Officer Vance", badgeId: "SH-8942-NY", clearance: "L4 - SCI" }); }} className="space-y-3.5 text-xs sm:text-sm">
-                            <input required placeholder="Officer Name" className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-white" />
-                            <input required placeholder="Badge ID (SH-XXXX)" className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-sky-400 font-mono" />
-                            <button type="submit" className="w-full py-3.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-700 text-white font-mono font-bold text-sm shadow-lg shadow-red-600/30 transition transform active:scale-95">
-                                SUBMIT CLEARANCE
-                            </button>
-                        </form>
+              <div className="overflow-x-auto flex-1">
+                <table className="w-full text-left text-xs sm:text-sm">
+                  <thead className="bg-[#111726] text-slate-400 font-mono text-xs uppercase border-b border-[#1f293d]">
+                    <tr>
+                      <th className="py-3 px-3.5">Case ID</th>
+                      <th className="py-3 px-3.5">Complainant</th>
+                      <th className="py-3 px-3.5">Category</th>
+                      <th className="py-3 px-3.5">Risk</th>
+                      <th className="py-3 px-3.5">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#1a2333]">
+                    {filteredCases.map(item => {
+                      const isSelected = selectedDbCase && selectedDbCase.id === item.id;
+                      return (
+                        <tr
+                          key={item.id}
+                          onClick={() => setSelectedDbCase(item)}
+                          className={`cursor-pointer transition ${isSelected ? 'bg-amber-950/30 border-l-4 border-amber-500' : 'hover:bg-slate-900/60'}`}
+                        >
+                          <td className="py-3.5 px-3.5 font-mono font-bold text-sky-400">{item.id}</td>
+                          <td className="py-3.5 px-3.5">
+                            <div className="font-bold text-white truncate max-w-[130px]">{item.complainant || "Citizen"}</div>
+                            <div className="text-xs font-mono text-slate-500 truncate max-w-[130px]">{item.location}</div>
+                          </td>
+                          <td className="py-3.5 px-3.5 font-mono text-slate-300">{item.category}</td>
+                          <td className="py-3.5 px-3.5 font-mono font-bold">
+                            <span className={getRiskColor(item.riskScore)}>{item.riskScore}%</span>
+                          </td>
+                          <td className="py-3.5 px-3.5">
+                            <span className="text-xs font-mono px-2.5 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700 truncate">
+                              {item.status}
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div className="lg:col-span-5 space-y-4">
+              {selectedDbCase ? (
+                <div className="bg-[#0c111d] border border-[#1f293d] rounded-2xl p-6 shadow-xl space-y-4 animate-modal-pop">
+                  <div className="flex justify-between items-start border-b border-[#1f293d] pb-3.5">
+                    <div>
+                      <span className="text-xs font-mono text-amber-400 font-bold uppercase">CASE GPS TELEMETRY</span>
+                      <h3 className="text-lg font-black text-white mt-1">{selectedDbCase.id} — {selectedDbCase.title}</h3>
                     </div>
+                    <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${getPriorityBadge(selectedDbCase.priority)}`}>
+                      {selectedDbCase.priority}
+                    </span>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between text-xs font-mono">
+                      <span className="text-slate-400">CITIZEN PINNED LOCATION:</span>
+                      <span className="text-emerald-400 font-bold text-sm">{selectedDbCase.coords[0].toFixed(4)}, {selectedDbCase.coords[1].toFixed(4)}</span>
+                    </div>
+                    <div className="h-56 rounded-xl overflow-hidden border border-[#1f293d] relative">
+                      <div ref={dbMapRef} className="w-full h-full"></div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2.5 text-xs font-mono">
+                    <div className="p-3 rounded-xl bg-[#111726] border border-[#1f293d]">
+                      <span className="text-slate-500 text-[10px] block">COMPLAINANT:</span>
+                      <span className="text-white font-bold text-sm">{selectedDbCase.complainant || "Citizen User"}</span>
+                    </div>
+                    <div className="p-3 rounded-xl bg-[#111726] border border-[#1f293d]">
+                      <span className="text-slate-500 text-[10px] block">RECEIPT ID:</span>
+                      <span className="text-sky-400 font-bold text-sm">{selectedDbCase.receiptNo || "REC-2026-PENDING"}</span>
+                    </div>
+                  </div>
+
+                  <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-xs sm:text-sm">
+                    <span className="text-xs font-mono text-slate-400 uppercase block mb-1 font-bold">NARRATIVE STATEMENT:</span>
+                    <p className="text-slate-300 leading-relaxed italic">"{selectedDbCase.summary}"</p>
+                  </div>
+
+                  <div className="pt-2 border-t border-[#1f293d] space-y-2">
+                    <label className="text-xs font-mono text-slate-400 uppercase block font-bold">Update Investigation Status:</label>
+                    <div className="grid grid-cols-3 gap-2">
+                      <button onClick={() => handleStatusChange(selectedDbCase.id, "Tactical Response")} className="py-2 rounded-lg bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white border border-red-500/40 text-xs font-mono font-bold transition transform active:scale-95">
+                        Dispatch Squad
+                      </button>
+                      <button onClick={() => handleStatusChange(selectedDbCase.id, "Under Investigation")} className="py-2 rounded-lg bg-sky-600/20 hover:bg-sky-600 text-sky-300 hover:text-white border border-sky-500/40 text-xs font-mono font-bold transition transform active:scale-95">
+                        Assign Detective
+                      </button>
+                      <button onClick={() => handleStatusChange(selectedDbCase.id, "Resolved & Closed")} className="py-2 rounded-lg bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/40 text-xs font-mono font-bold transition transform active:scale-95">
+                        Mark Solved
+                      </button>
+                    </div>
+                  </div>
                 </div>
-            );
-        }
-
-        // ================= 6. DASHBOARD VIEW =================
-        function DashboardView({ cases, currentUser, onNavigate, showToast }) {
-            const [selectedCase, setSelectedCase] = useState(cases[0] || null);
-            const mapRef = useRef(null);
-            const mapInst = useRef(null);
-            const markersRef = useRef([]);
-
-            useEffect(() => {
-                if (!mapRef.current) return;
-                if (!mapInst.current) {
-                    const map = L.map(mapRef.current, { center: [40.7428, -73.9960], zoom: 12, zoomControl: false });
-                    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(map);
-                    mapInst.current = map;
-                }
-                const map = mapInst.current;
-                markersRef.current.forEach(m => map.removeLayer(m));
-                markersRef.current = [];
-
-                cases.forEach(item => {
-                    const markerColor = item.priority === "Critical" ? "#ef4444" : "#f97316";
-                    const icon = L.divIcon({
-                        html: `<div style="width:22px;height:22px;background:#0f172a;border:2px solid ${markerColor};border-radius:50%;color:${markerColor};display:flex;align-items:center;justify-content:center;font-size:11px;"><i class="fa-solid fa-crosshairs"></i></div>`,
-                        iconSize: [22, 22],
-                        iconAnchor: [11, 11]
-                    });
-                    const marker = L.marker(item.coords, { icon }).addTo(map);
-                    marker.bindPopup(`<div class="text-xs p-1"><b class="text-sky-400">${item.id}</b><div class="text-white">${item.title}</div></div>`);
-                    marker.on('click', () => setSelectedCase(item));
-                    markersRef.current.push(marker);
-                });
-            }, [cases]);
-
-            return (
-                <div className="p-6 sm:p-8 space-y-6 max-w-7xl mx-auto">
-
-                    {/* Dashboard Header */}
-                    <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#1f293d] pb-4">
-                        <div>
-                            <h2 className="text-2xl sm:text-4xl font-black text-white">RAKSHAK Tactical Command</h2>
-                            <p className="text-xs sm:text-sm text-slate-400 mt-1">Authenticated Officer: <strong className="text-white">{currentUser.name}</strong> ({currentUser.clearance})</p>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <button
-                                onClick={() => showToast("🚨 Tactical Broadcast Transmitted to 48 Patrol Units!", "alert")}
-                                className="px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-mono text-xs sm:text-sm font-bold flex items-center gap-2 shadow-lg shadow-red-600/30 transition transform active:scale-95"
-                            >
-                                <i className="fa-solid fa-bullhorn"></i> Broadcast Alert
-                            </button>
-                            <button
-                                onClick={() => onNavigate('database')}
-                                className="px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-mono text-xs sm:text-sm font-bold flex items-center gap-2 shadow-lg shadow-amber-600/30 transition transform active:scale-95"
-                            >
-                                <i className="fa-solid fa-database"></i> Open Police Database
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div className="lg:col-span-2 h-[380px] rounded-2xl overflow-hidden border border-[#1f293d]">
-                            <div ref={mapRef} className="w-full h-full"></div>
-                        </div>
-
-                        <div className="p-5 rounded-2xl bg-[#111726] border border-[#1f293d] space-y-3">
-                            <span className="text-sm font-mono text-sky-400 font-bold block">ACTIVE DOSSIERS ({cases.length})</span>
-                            <div className="space-y-2.5 max-h-[300px] overflow-y-auto pr-1 text-xs sm:text-sm">
-                                {cases.map(c => (
-                                    <div key={c.id} onClick={() => setSelectedCase(c)} className={`p-3.5 rounded-xl border cursor-pointer transition ${selectedCase?.id === c.id ? 'bg-[#151f33] border-sky-500 shadow-md' : 'bg-slate-900 border-slate-800'}`}>
-                                        <div className="flex justify-between font-mono text-xs text-sky-400"><span>{c.id}</span><span>{c.priority}</span></div>
-                                        <div className="font-bold text-white text-sm mt-0.5">{c.title}</div>
-                                        <div className="text-slate-400 text-xs truncate mt-0.5">{c.location}</div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
+              ) : (
+                <div className="p-8 bg-[#0c111d] border border-[#1f293d] rounded-2xl text-center text-slate-500 text-sm font-mono">
+                  Select a case from the table to view the citizen's pinned GPS location.
                 </div>
-            );
-        }
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    }
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
+    // ================= 4. POLICE SIGN-IN VIEW =================
+    function PoliceSignInView({ onNavigate, onLoginSuccess, showToast }) {
+      const [policeId, setPoliceId] = useState("SH-8942-NY");
+      const [officerName, setOfficerName] = useState("Special Agent Vance");
+      const [password, setPassword] = useState("••••••••••••");
+
+      const handleOfficerAuth = (e) => {
+        e.preventDefault();
+        onLoginSuccess({
+          name: officerName,
+          badgeId: policeId,
+          clearance: "L4 - SCI",
+          station: "Central Precinct Sector 04"
+        });
+      };
+
+      return (
+        <div className="max-w-md mx-auto px-6 py-12 animate-modal-pop">
+          <div className="bg-[#0c111d] border-2 border-red-500/60 rounded-3xl p-7 sm:p-9 shadow-2xl space-y-6 shadow-red-950/40">
+            <div className="text-center">
+              <div className="w-16 h-16 rounded-2xl bg-red-500/20 border border-red-500/40 text-red-400 flex items-center justify-center text-3xl mx-auto mb-3 shadow-inner">
+                <i className="fa-solid fa-id-card-clip"></i>
+              </div>
+              <span className="text-xs font-mono text-red-400 font-bold bg-red-950 px-2.5 py-1 rounded border border-red-800 uppercase">
+                RESTRICTED POLICE TERMINAL
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-black text-white mt-2">Officer Shield Sign-In</h2>
+              <p className="text-xs text-slate-400 mt-1">Authenticate to unlock the RAKSHAK Central Police Database & GPS telemetry.</p>
+            </div>
+
+            <form onSubmit={handleOfficerAuth} className="space-y-4 text-xs sm:text-sm">
+              <div>
+                <label className="text-slate-300 block mb-1 font-medium">Officer Name / Title *</label>
+                <input required value={officerName} onChange={e => setOfficerName(e.target.value)} className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-white" />
+              </div>
+              <div>
+                <label className="text-slate-300 block mb-1 font-medium">Police ID / Shield Number *</label>
+                <input required value={policeId} onChange={e => setPoliceId(e.target.value)} className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-sky-400 font-mono font-bold" />
+              </div>
+              <div>
+                <label className="text-slate-300 block mb-1 font-medium">Security Clearance Password *</label>
+                <input type="password" required value={password} onChange={e => setPassword(e.target.value)} className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-white" />
+              </div>
+              <button type="submit" className="w-full py-3.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-700 hover:from-red-500 text-white font-mono font-bold text-sm shadow-lg shadow-red-600/30 transition transform active:scale-95 flex items-center justify-center gap-2">
+                <i className="fa-solid fa-shield-halved"></i>
+                <span>AUTHENTICATE & UNLOCK DATABASE</span>
+              </button>
+            </form>
+
+            <div className="pt-2 text-center text-xs font-mono text-slate-500 border-t border-slate-800">
+              Need a new tactical ID? <button onClick={() => onNavigate('police_signup')} className="text-sky-400 hover:underline font-bold">Register Badge</button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ================= 5. POLICE SIGN-UP VIEW =================
+    function PoliceSignUpView({ onNavigate, onSignUpSuccess }) {
+      const [name, setName] = useState("");
+      const [badge, setBadge] = useState("");
+
+      const handleSignUp = (e) => {
+        e.preventDefault();
+        onSignUpSuccess({
+          name: name || "Officer Vance",
+          badgeId: badge || "SH-8942-NY",
+          clearance: "L4 - SCI",
+          station: "Central Precinct Sector 04"
+        });
+      };
+
+      return (
+        <div className="max-w-md mx-auto px-6 py-12 animate-modal-pop">
+          <div className="bg-[#0c111d] border border-[#1f293d] rounded-3xl p-7 sm:p-9 shadow-2xl space-y-6">
+            <div className="text-center">
+              <h2 className="text-2xl sm:text-3xl font-black text-white">Register Sworn RAKSHAK Badge</h2>
+              <p className="text-xs text-slate-400 mt-1">Enroll your police credentials into the tactical ledger.</p>
+            </div>
+            <form onSubmit={handleSignUp} className="space-y-3.5 text-xs sm:text-sm">
+              <input required placeholder="Officer Full Name" value={name} onChange={e => setName(e.target.value)} className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-white" />
+              <input required placeholder="Badge ID (e.g. SH-9412-NY)" value={badge} onChange={e => setBadge(e.target.value)} className="w-full bg-[#111726] border border-[#1f293d] rounded-xl p-3 text-sky-400 font-mono" />
+              <button type="submit" className="w-full py-3.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-700 text-white font-mono font-bold text-sm shadow-lg shadow-red-600/30 transition transform active:scale-95">
+                REGISTER & UNLOCK DATABASE
+              </button>
+            </form>
+          </div>
+        </div>
+      );
+    }
+
+    // ================= 6. DASHBOARD VIEW (RESTRICTED TO LOGGED-IN OFFICERS) =================
+    function DashboardView({ cases, currentUser, onNavigate, showToast }) {
+      const [selectedCase, setSelectedCase] = useState(cases[0] || null);
+      const mapRef = useRef(null);
+      const mapInst = useRef(null);
+      const markersRef = useRef([]);
+
+      useEffect(() => {
+        if (!mapRef.current) return;
+        if (!mapInst.current) {
+          const map = L.map(mapRef.current, { center: [40.7428, -73.9960], zoom: 12, zoomControl: false });
+          L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(map);
+          mapInst.current = map;
+        }
+        const map = mapInst.current;
+        markersRef.current.forEach(m => map.removeLayer(m));
+        markersRef.current = [];
+
+        cases.forEach(item => {
+          const markerColor = item.priority === "Critical" ? "#ef4444" : "#f97316";
+          const icon = L.divIcon({
+            html: `<div style="width:22px;height:22px;background:#0f172a;border:2px solid ${markerColor};border-radius:50%;color:${markerColor};display:flex;align-items:center;justify-content:center;font-size:11px;"><i class="fa-solid fa-crosshairs"></i></div>`,
+            iconSize: [22, 22],
+            iconAnchor: [11, 11]
+          });
+          const marker = L.marker(item.coords, { icon }).addTo(map);
+          marker.bindPopup(`<div class="text-xs p-1"><b class="text-sky-400">${item.id}</b><div class="text-white">${item.title}</div></div>`);
+          marker.on('click', () => setSelectedCase(item));
+          markersRef.current.push(marker);
+        });
+      }, [cases]);
+
+      return (
+        <div className="p-6 sm:p-8 space-y-6 max-w-7xl mx-auto animate-modal-pop">
+
+          {/* Dashboard Header */}
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#1f293d] pb-4">
+            <div>
+              <h2 className="text-2xl sm:text-4xl font-black text-white">RAKSHAK Tactical Command</h2>
+              <p className="text-xs sm:text-sm text-slate-400 mt-1">Authenticated Officer: <strong className="text-white">{currentUser?.name}</strong> ({currentUser?.clearance})</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => showToast("🚨 Tactical Broadcast Transmitted to 48 Patrol Units!", "alert")}
+                className="px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-mono text-xs sm:text-sm font-bold flex items-center gap-2 shadow-lg shadow-red-600/30 transition transform active:scale-95"
+              >
+                <i className="fa-solid fa-bullhorn"></i> Broadcast Alert
+              </button>
+              <button
+                onClick={() => onNavigate('database')}
+                className="px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-mono text-xs sm:text-sm font-bold flex items-center gap-2 shadow-lg shadow-amber-600/30 transition transform active:scale-95"
+              >
+                <i className="fa-solid fa-database"></i> Open Police Database
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2 h-[380px] rounded-2xl overflow-hidden border border-[#1f293d]">
+              <div ref={mapRef} className="w-full h-full"></div>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-[#111726] border border-[#1f293d] space-y-3">
+              <span className="text-sm font-mono text-sky-400 font-bold block">ACTIVE DOSSIERS ({cases.length})</span>
+              <div className="space-y-2.5 max-h-[300px] overflow-y-auto pr-1 text-xs sm:text-sm">
+                {cases.map(c => (
+                  <div key={c.id} onClick={() => setSelectedCase(c)} className={`p-3.5 rounded-xl border cursor-pointer transition ${selectedCase?.id === c.id ? 'bg-[#151f33] border-sky-500 shadow-md' : 'bg-slate-900 border-slate-800'}`}>
+                    <div className="flex justify-between font-mono text-xs text-sky-400"><span>{c.id}</span><span>{c.priority}</span></div>
+                    <div className="font-bold text-white text-sm mt-0.5">{c.title}</div>
+                    <div className="text-slate-400 text-xs truncate mt-0.5">{c.location}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
 </body>
 
 </html>
